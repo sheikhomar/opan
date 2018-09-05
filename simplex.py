@@ -17,6 +17,7 @@ def print_solution(res):
     display(Math(output))
 
 
+# Based on: https://github.com/MichaelStott/SimplexSolver
 class SimplexSolver:
     """ Solves linear programs using simplex algorithm and
         output problem steps in LaTeX file.
