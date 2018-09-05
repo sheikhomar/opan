@@ -256,6 +256,11 @@ class SimplexSolver:
             matrix[i] += [self.b[i]]
         return matrix
 
+    def get_marginal_values(self):
+        num_variables = len(self.A[0])
+        bottom_row = self.tableau[-1]
+        return bottom_row[num_variables:-1]
+
     def should_terminate(self):
         """ Determines whether there are any negative elements
             on the bottom row
