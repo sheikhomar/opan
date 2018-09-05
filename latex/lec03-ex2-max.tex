@@ -1,0 +1,98 @@
+\documentclass{article}\usepackage{amsmath}\begin{document}\title{Simplex Solver}\maketitle\begin{flushleft}\textbf{Problem}\end{flushleft}
+\begin{flushleft}Given the following linear system and objective function, find the optimal solution.\end{flushleft}\begin{equation*}
+\max{ 2x_1 + 3x_2 } \\ 
+\end{equation*}\[\left\{\begin{array}{c}
+ x_1 \leq 30 \\ 
+ x_2 \leq 20 \\ 
+ x_1 + 2x_2 \leq 54 \\ 
+\end{array}\right.\]
+\begin{flushleft}\textbf{Solution}\end{flushleft}
+\begin{flushleft}Add slack variables to turn all inequalities to equalities.\end{flushleft}
+\[\left\{\begin{array}{c}
+ x_1 + s_1 = 30 \\ 
+ x_2 + s_2 = 20 \\ 
+ x_1 + 2x_2 + s_3 = 54 \\ 
+\end{array}\right.\]
+\begin{flushleft}Create the initial tableau of the new linear system.\end{flushleft}
+
+\begin{equation*}
+\begin{bmatrix}
+\begin{array}{ccccc|c}
+x_1 & x_2 & s_1 & s_2 & s_3 & b \\ \hline 
+1 & 0 & 1 & 0 & 0 & 30 \\ 
+0 & 1 & 0 & 1 & 0 & 20 \\ 
+1 & 2 & 0 & 0 & 1 & 54 \\ \hline 
+-2 & -3 & 0 & 0 & 0 & 0 \\ 
+\end{array}
+\end{bmatrix}
+\begin{array}{c}\\ 
+s_1 \\ 
+s_2 \\ 
+s_3 \\ 
+\\ 
+\end{array}\end{equation*}
+
+\begin{flushleft}There are negative elements in the bottom row, so the current solution is not optimal. Thus, pivot to improve the current solution. The entering variable is $x_2$ and the departing variable is $s_2$.\end{flushleft}
+\begin{flushleft}Perform elementary row operations until the pivot element is 1 and all other elements in the entering column are 0.\end{flushleft}
+
+\begin{equation*}
+\begin{bmatrix}
+\begin{array}{ccccc|c}
+x_1 & x_2 & s_1 & s_2 & s_3 & b \\ \hline 
+1 & 0 & 1 & 0 & 0 & 30 \\ 
+0 & 1 & 0 & 1 & 0 & 20 \\ 
+1 & 0 & 0 & -2 & 1 & 14 \\ \hline 
+-2 & 0 & 0 & 3 & 0 & 60 \\ 
+\end{array}
+\end{bmatrix}
+\begin{array}{c}\\ 
+s_1 \\ 
+x_2 \\ 
+s_3 \\ 
+\\ 
+\end{array}\end{equation*}
+
+\begin{flushleft}There are negative elements in the bottom row, so the current solution is not optimal. Thus, pivot to improve the current solution. The entering variable is $x_1$ and the departing variable is $s_3$.\end{flushleft}
+\begin{flushleft}Perform elementary row operations until the pivot element is 1 and all other elements in the entering column are 0.\end{flushleft}
+
+\begin{equation*}
+\begin{bmatrix}
+\begin{array}{ccccc|c}
+x_1 & x_2 & s_1 & s_2 & s_3 & b \\ \hline 
+0 & 0 & 1 & 2 & -1 & 16 \\ 
+0 & 1 & 0 & 1 & 0 & 20 \\ 
+1 & 0 & 0 & -2 & 1 & 14 \\ \hline 
+0 & 0 & 0 & -1 & 2 & 88 \\ 
+\end{array}
+\end{bmatrix}
+\begin{array}{c}\\ 
+s_1 \\ 
+x_2 \\ 
+x_1 \\ 
+\\ 
+\end{array}\end{equation*}
+
+\begin{flushleft}There are negative elements in the bottom row, so the current solution is not optimal. Thus, pivot to improve the current solution. The entering variable is $s_2$ and the departing variable is $s_1$.\end{flushleft}
+\begin{flushleft}Perform elementary row operations until the pivot element is 1 and all other elements in the entering column are 0.\end{flushleft}
+
+\begin{equation*}
+\begin{bmatrix}
+\begin{array}{ccccc|c}
+x_1 & x_2 & s_1 & s_2 & s_3 & b \\ \hline 
+0 & 0 & 1/2 & 1 & -1/2 & 8 \\ 
+0 & 1 & -1/2 & 0 & 1/2 & 12 \\ 
+1 & 0 & 1 & 0 & 0 & 30 \\ \hline 
+0 & 0 & 1/2 & 0 & 3/2 & 96 \\ 
+\end{array}
+\end{bmatrix}
+\begin{array}{c}\\ 
+s_2 \\ 
+x_2 \\ 
+x_1 \\ 
+\\ 
+\end{array}\end{equation*}
+
+\begin{flushleft}There are no negative elements in the bottom row, so we know the solution is optimal. Thus, the solution is: \end{flushleft}
+
+\begin{equation*}s_1 = 0, s_2 = 8, s_3 = 0, x_1 = 30, x_2 = 12, z = 96\end{equation*}
+\end{document}
