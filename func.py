@@ -1,6 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.axisartist.axislines import SubplotZero
 import sympy as sy
+from IPython.display import display
+
 
 class Func:
     def __init__(self, f, x):
@@ -46,8 +49,117 @@ class Func:
     def satisfies_sonc(self, point):
         """
         Determines whether a point satisfies the Second-Order Necessary Condition.
+        If the SONC is not satisfied then we have a saddle point.
+
+        When the determinant of the Hessian matrix is positive, then we know that
+        we have either a minimum or a maximum.
+
+        The determinant of positive semidefinite is multiplication of its eigenvalues.
         """
         return self.hessian_at(point).det() >= 0
+
+    def plot_point(self, point):
+        x_limit = 10
+        y_limit = 5
+        fig = plt.figure(1, figsize=(8,4))
+        ax = SubplotZero(fig, 1, 1, 1)
+        fig.add_subplot(ax)
+        ax.grid(color='#eeeeee', linestyle='-', linewidth=2)
+        ax.set_xticks(np.arange(-1*x_limit, x_limit, 1))
+        ax.set_xlim(-1*x_limit, x_limit)
+        ax.set_yticks(np.arange(-1*y_limit, y_limit, 1))
+        ax.set_ylim(-1*y_limit, y_limit)
+        ax.axis['xzero'].set_axisline_style('-|>')
+        ax.axis['xzero'].set_visible(True)
+        ax.axis["xzero"].label.set_text('$x_1$')
+        ax.axis['yzero'].set_axisline_style('-|>')
+        ax.axis['yzero'].set_visible(True)
+        ax.axis["yzero"].label.set_text('$x_2$')
+        ax.plot(*point,'ro',label='$x^{*}$')
+        ax.legend();
+
+    def fonc_at(self, point):
+        """
+        Computes the First-Order Necessary Condition at a given point.
+        """
+        grad = self.gradient_at(point)
+        d1, d2 = sy.symbols('d1, d2')
+        fonc_expr = d1 * grad[0]  + d2 * grad[1] >= 0
+        return fonc_expr
+
+    def find_critical_points(self):
+        """
+        Finds all the points where the gradient is zero and classifies them.
+        """
+        points = self.fonc_points()
+        for point in points:
+            print(self.classify_critical_point(point))
+        return points
+
+    def classify_critical_point2(self, point):
+        """
+        Determines whether a given point is a saddle point.
+        This is the same as checking whether a point satisfies the Second-Order
+        Necessary Condition.
+        """
+        # Compute the Hessian at the given point
+        H_sympy = self.hessian_at(point)
+
+        # Convert SymPy matrix to NumPy matrix
+        H = np.array(H_sympy).astype(np.float64)
+
+        # Compute the eigen values
+        eigenvals = np.linalg.eigvals(H)
+
+        # Check of positive and negative eigenvalues
+        has_positive_eigenvals = len(eigenvals[eigenvals >= 0]) > 0
+        has_negative_eigenvals = len(eigenvals[eigenvals < 0]) > 0
+        has_only_positive_eigenvals = has_positive_eigenvals and not has_negative_eigenvals
+        has_only_negative_eigenvals = not has_positive_eigenvals and has_negative_eigenvals
+
+        # When the Hessian has both positive and negative
+        # eigenvalues, the point is a saddle point
+        # i.e. Hessian is not positive semidefinite
+        if has_positive_eigenvals and has_negative_eigenvals:
+            return 'The point {} is a saddle point.'.format(point)
+
+        # When the Hessian has only positive eigenvalues
+        # then the point is a local minimum.
+        # Hessian is positive semidefinite
+        if has_only_positive_eigenvals:
+            return 'The point {} is a local minimum.'.format(point)
+
+        # When the Hessian has only negative eigenvalues
+        # then the point is a local maximum.
+        # Hessian is negative definite
+        if has_only_negative_eigenvals:
+            return 'The point {} is a local maximum.'.format(point)
+
+        return 'Unknown'
+
+    def classify_critical_point(self, point):
+        """
+        Determines whether a given point is a saddle point.
+        This is the same as checking whether a point satisfies the Second-Order
+        Necessary Condition.
+        """
+        # Compute the Hessian at the given point
+        H = self.hessian_at(point)
+
+        # If the determinant of the Hessian matrix is negative,
+        # then we have a saddle point.
+        if H.det() < 0:
+            return 'The point {} is a saddle point.'.format(point)
+
+        # If the determinant of the Hessian matrix is positive,
+        # then we know that we have either a minimum or a maximum.
+
+        # If the first entry of the Hessian is positive, then we have a minimum.
+        if H[0,0] > 0:
+            return 'The point {} is a local minimum.'.format(point)
+
+        # If the first entry of the Hessian is negative or zero, then we have a maximum.
+        return 'The point {} is a local maximum.'.format(point)
 
     def plot(self, range_x=None, range_y=None):
         if range_x is not None and len(range_x) == 2:
@@ -59,8 +171,8 @@ class Func:
         else:
             range_y = (self._x[1], -10, 10)
         plot = sy.plotting.plot3d(self._f[0], range_x, range_y, show=False, legend=False)
-        plot.xlabel = '$x_1$'
-        plot.ylabel = '$x_2$'
+        plot.xlabel = self._x[0]
+        plot.ylabel = self._x[1]
         plot.show()
 
     def create(A, b, term3):
@@ -101,3 +213,10 @@ class Func:
         simplified_result = sy.simplify(term1 + term2 + term3)[0]
 
         return simplified_result
+
+    def __repr__(self):
+        display(self._f)
+        return ''
+
+    def __str__(self):
+        return str(self._f)
