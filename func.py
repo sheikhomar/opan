@@ -6,6 +6,7 @@ class Func:
     def __init__(self, f, x):
         self._f = sy.Matrix([f])
         self._x = x
+        self._f_lambda = sy.lambdify(x, self._f)
         self._jacobian = self._f.jacobian(x)
         self._jacobian_lambda = sy.lambdify(x, self._jacobian)
         self._hessian = self._jacobian.jacobian(x)
@@ -70,3 +71,33 @@ class Func:
         term2 = np.dot(x_vec.T, np.array(b).reshape(2, -1))
         result = term1 + term2 + term3
         return Func(result[0], x)
+
+    def taylor(self, x0):
+        """
+        Computes the third order Taylor series expansion about the
+        given point x0.
+        """
+        # Compute the vector: x-x0 since we are going to use multiple times
+        x_minus_x0 = (np.array(self._x) - np.array(x0)).reshape(2, -1)
+
+        # Compute f(x0)
+        term1 = self._f_lambda(*x0)
+
+        # Compute dfdx(x0)*(x-x0)
+        term2 = np.dot(self._jacobian_lambda(*x0), x_minus_x0)
+
+        # Compute p1 = 1/2*(x-x0)
+        p1 = sy.Rational(1, 2) * x_minus_x0
+
+        # Compute p2 = p1^T * Hessian(x0)
+        p2 = np.dot(p1.T, self._hessian_lambda(*x0))
+
+        # Compute term3 = p2 * (x-x0)
+        term3 = np.dot(p2, x_minus_x0)
+
+        result = (term1 + term2 + term3)[0][0]
+
+        # Simplify the sum of all the terms
+        simplified_result = sy.simplify(term1 + term2 + term3)[0]
+
+        return simplified_result
