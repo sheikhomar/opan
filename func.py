@@ -6,14 +6,48 @@ from IPython.display import display
 
 
 class Func:
-    def __init__(self, f, x):
+    def __init__(self, f, x, constraints=None):
         self._f = sy.Matrix([f])
         self._x = x
+        self._constraints = constraints
         self._f_lambda = sy.lambdify(x, self._f)
         self._jacobian = self._f.jacobian(x)
         self._jacobian_lambda = sy.lambdify(x, self._jacobian)
         self._hessian = self._jacobian.jacobian(x)
         self._hessian_lambda = sy.lambdify(x, self._hessian)
+
+    def evalf(self, points):
+        """
+        Evaluates the function at a certain point.
+        """
+        if isinstance(points, list):
+            for point in points:
+                params = dict(zip(self._x, point))
+                result = self._f.evalf(subs=params)
+                print('Evaluting f{} = {}'.format(point, result[0]))
+        else:
+            params = dict(zip(self._x, points))
+            return self._f.evalf(subs=params),
+
+    def solve_lagrangian(self):
+        lamda = sy.symbols('lamda')
+
+        # Formulate the Lagrangian condition
+        lang_condition = self._f[0] - lamda * ( self._constraints[0]  )
+        L = sy.Matrix([lang_condition])
+
+        # Find the gradient of the Lagrangian
+        new_params = self._x + (lamda,)
+        dL = L.jacobian(new_params)
+
+        # Solve it with respect to all the parameters
+        result = sy.nonlinsolve(dL, new_params)
+
+        # Remove the lambda value from the results
+        points = [tup[0:-1] for tup in list(result)]
+        lambdas = [tup[-1] for tup in list(result)]
+
+        return points, lambdas
 
     def gradient(self):
         return self._jacobian
