@@ -5,6 +5,7 @@ channels:
 dependencies:
   - python=3.6
   - numpy
+  - scikit-learn
   - scipy
   - sympy
   - pandas
@@ -13,3 +14,5 @@ dependencies:
   - pillow=5
   - opencv=3
   - jupyterlab
+  - tensorflow
+  - keras
