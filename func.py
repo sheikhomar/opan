@@ -30,22 +30,30 @@ class Func:
             return self._f.evalf(subs=params),
 
     def solve_lagrangian(self):
-        lamda = sy.symbols('lamda')
+        num_constraints = len(self._constraints)
 
-        # Formulate the Lagrangian condition
-        lang_condition = self._f[0] - lamda * ( self._constraints[0]  )
-        L = sy.Matrix([lang_condition])
+        # Define a lambda symbol for each constraint
+        lambda_names = tuple([('lambda%s' % i) for i in range(1, num_constraints+1)])
+        lambdas = sy.symbols(lambda_names)
+        lambda_vec = sy.Matrix(lambdas)
 
-        # Find the gradient of the Lagrangian
-        new_params = self._x + (lamda,)
-        dL = L.jacobian(new_params)
+        # Define constraints as vector
+        H = sy.Matrix(self._constraints)
+
+        # Formulate the Lagrangian function l
+        l = self._f + lambda_vec.T * H
+
+        # Find the gradient of the Lagrangian function
+        # with respect to all parameters
+        all_params = self._x + lambdas
+        Dl = l.jacobian(all_params)
 
         # Solve it with respect to all the parameters
-        result = sy.nonlinsolve(dL, new_params)
+        result = sy.nonlinsolve(Dl, all_params)
 
         # Remove the lambda value from the results
-        points = [tup[0:-1] for tup in list(result)]
-        lambdas = [tup[-1] for tup in list(result)]
+        points = [tup[0:-num_constraints] for tup in list(result)]
+        lambdas = [tup[-num_constraints:] for tup in list(result)]
 
         return points, lambdas
 
