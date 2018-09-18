@@ -4,7 +4,7 @@ import sympy as sy
 
 from IPython.display import HTML, display
 
-class OneDimensionalSearch:
+class OneDimensionalIntervalBasedSearch:
     def __init__(self, f, x, initial_range, uncertainty, epsilon=0.0):
         self._f = sy.Matrix([f])
         self._x = x
@@ -101,7 +101,7 @@ class OneDimensionalSearch:
         raise Exception('Not implemented')
 
 
-class GoldenSectionSearch(OneDimensionalSearch):
+class GoldenSectionSearch(OneDimensionalIntervalBasedSearch):
     def __init__(self, f, x, initial_range, uncertainty):
         super(GoldenSectionSearch, self).__init__(f, x, initial_range, uncertainty)
 
@@ -124,7 +124,7 @@ class GoldenSectionSearch(OneDimensionalSearch):
         return self._rho
 
 
-class FibonacciSearch(OneDimensionalSearch):
+class FibonacciSearch(OneDimensionalIntervalBasedSearch):
 
     def __init__(self, f, x, initial_range, uncertainty, epsilon):
         super(FibonacciSearch, self).__init__(
@@ -157,4 +157,3 @@ class FibonacciSearch(OneDimensionalSearch):
         result = 1 - sy.fibonacci(l+1) / sy.fibonacci(l+2)
 
         return float(result)
-
