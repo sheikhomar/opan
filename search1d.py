@@ -5,8 +5,10 @@ import sympy as sy
 from IPython.display import HTML, display
 
 class OneDimensionalSearch:
-    def __init__(self, f, initial_range, uncertainty, epsilon=0.0):
-        self._f = f
+    def __init__(self, f, x, initial_range, uncertainty, epsilon=0.0):
+        self._f = sy.Matrix([f])
+        self._x = x
+        self._f_lambda = sy.lambdify(x, f)
         self._x_start = initial_range[0]
         self._x_end = initial_range[1]
         self._uncertainty = uncertainty
@@ -14,7 +16,7 @@ class OneDimensionalSearch:
 
     def plot(self, ylimit=None):
         x = np.linspace(self._x_start, self._x_end, 50)
-        y = self._f(x)
+        y = self._f_lambda(x)
 
         if ylimit is None:
             y_high = np.max(y)
@@ -64,8 +66,8 @@ class OneDimensionalSearch:
                 a = x_start + (rho - self._epsilon) * (x_end - x_start)
 
             # Evaluate f at the intermediate points
-            fa = self._f(a)
-            fb = self._f(b)
+            fa = self._f_lambda(a)
+            fb = self._f_lambda(b)
 
             uncert_int = (0, 0)
 
@@ -100,8 +102,8 @@ class OneDimensionalSearch:
 
 
 class GoldenSectionSearch(OneDimensionalSearch):
-    def __init__(self, f, initial_range, uncertainty):
-        super(GoldenSectionSearch, self).__init__(f, initial_range, uncertainty)
+    def __init__(self, f, x, initial_range, uncertainty):
+        super(GoldenSectionSearch, self).__init__(f, x, initial_range, uncertainty)
 
         # Compute rho once
         self._rho = (3-np.sqrt(5))/2
@@ -124,9 +126,9 @@ class GoldenSectionSearch(OneDimensionalSearch):
 
 class FibonacciSearch(OneDimensionalSearch):
 
-    def __init__(self, f, initial_range, uncertainty, epsilon):
+    def __init__(self, f, x, initial_range, uncertainty, epsilon):
         super(FibonacciSearch, self).__init__(
-            f, initial_range, uncertainty, epsilon)
+            f, x, initial_range, uncertainty, epsilon)
 
     def estimate_iterations(self):
         """
