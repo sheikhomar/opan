@@ -157,3 +157,52 @@ class FibonacciSearch(OneDimensionalIntervalBasedSearch):
         result = 1 - sy.fibonacci(l+1) / sy.fibonacci(l+2)
 
         return float(result)
+
+
+class NewtonSearch:
+    def __init__(self, f, x):
+        self._f = sy.Matrix([f])
+        self._x = (x,)
+        self._f_lambda = sy.lambdify(x, f)
+        self._jacobian = self._f.jacobian(self._x)
+        self._jacobian_lambda = sy.lambdify(self._x, self._jacobian)
+        self._hessian = self._jacobian.jacobian(self._x)
+        self._hessian_lambda = sy.lambdify(self._x, self._hessian)
+
+    def run(self, starting_point, epsilon, max_iterations=21):
+        x_k = starting_point
+        stop = False
+        for k in range(1, max_iterations):
+            jacob_at_x_k = np.asscalar(self._jacobian_lambda(x_k))
+            hess_at_x_k = np.asscalar(self._hessian_lambda(x_k))
+            x_kp1 = x_k - (jacob_at_x_k / hess_at_x_k)
+            if np.abs(x_kp1 - x_k) < epsilon:
+                stop = True
+            x_k = x_kp1
+            print('Iteration {0:2}: x(k)={1}'.format(k, x_k))
+            if stop:
+                print(' Stopping condition reached!')
+                break
+        if not stop:
+            print(' Stopping condition never reached!')
+        return x_k
+
+    def plot(self, xlimit=(-10, 10), ylimit=None):
+        x_start = xlimit[0]
+        x_end = xlimit[1]
+        x = np.linspace(x_start, x_end, 50)
+        y = self._f_lambda(x)
+
+        if ylimit is None:
+            y_high = np.max(y)
+            y_low = np.min(y)
+            space = (y_high - y_low) / 20
+            ylimit = (y_low - space, y_high + space)
+
+        fig, ax = plt.subplots(figsize=(10, 6))
+        ax.plot(x, y)
+        ax.set_xlabel('$x$')
+        ax.set_ylabel('$f(x)$')
+        ax.set_xlim(x_start, x_end)
+        ax.set_ylim(*ylimit)
+
