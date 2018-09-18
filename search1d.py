@@ -169,6 +169,9 @@ class NewtonSearch:
         self._hessian = self._jacobian.jacobian(self._x)
         self._hessian_lambda = sy.lambdify(self._x, self._hessian)
 
+    def evaluate(self, x):
+        return self._f_lambda(x)
+
     def run(self, starting_point, epsilon, max_iterations=21):
         x_k = starting_point
         stop = False
@@ -187,7 +190,25 @@ class NewtonSearch:
             print(' Stopping condition never reached!')
         return x_k
 
-    def plot(self, xlimit=(-10, 10), ylimit=None):
+    def find_root(self, starting_point, epsilon=0.00001, max_iterations=21):
+        x_k = starting_point
+        stop = False
+        for k in range(1, max_iterations):
+            f_at_x_k = self._f_lambda(x_k)
+            jacob_at_x_k = np.asscalar(self._jacobian_lambda(x_k))
+            x_kp1 = x_k - (f_at_x_k / jacob_at_x_k)
+            if np.abs(x_kp1 - x_k) < epsilon:
+                stop = True
+            x_k = x_kp1
+            print('Iteration {0:2}: x(k)={1}'.format(k, x_k))
+            if stop:
+                print(' Stopping condition reached!')
+                break
+        if not stop:
+            print(' Stopping condition never reached!')
+        return x_k
+
+    def plot(self, xlimit=(-10, 10), ylimit=None, show_spines=False):
         x_start = xlimit[0]
         x_end = xlimit[1]
         x = np.linspace(x_start, x_end, 50)
@@ -205,4 +226,14 @@ class NewtonSearch:
         ax.set_ylabel('$f(x)$')
         ax.set_xlim(x_start, x_end)
         ax.set_ylim(*ylimit)
+
+        if show_spines:
+            ax.spines['left'].set_position('zero')
+            ax.spines['right'].set_color('none')
+            ax.spines['bottom'].set_position('zero')
+            ax.spines['top'].set_color('none')
+            ax.spines['left'].set_smart_bounds(True)
+            ax.spines['bottom'].set_smart_bounds(True)
+            ax.xaxis.set_ticks_position('bottom')
+            ax.yaxis.set_ticks_position('left')
 
