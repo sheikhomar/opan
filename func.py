@@ -1,8 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.axisartist.axislines import SubplotZero
 import sympy as sy
-from IPython.display import display
+
+from mpl_toolkits.axisartist.axislines import SubplotZero
+from IPython.display import display, HTML
 
 
 class Func:
@@ -226,6 +227,13 @@ class Func:
         result = term1 + term2 + term3
         return Func(result[0], x)
 
+    def create_quadratic(Q, b, c=0):
+        """
+        Creates a quadratic function of the form:
+         x.T*Q*x + x.T*b + c
+        """
+        return Func.create(Q, b, c)
+
     def taylor(self, x0):
         """
         Computes the third order Taylor series expansion about the
@@ -256,9 +264,121 @@ class Func:
 
         return simplified_result
 
+    def parse_term(self, expr):
+        syms = []
+        cons = []
+
+        if type(expr) == sy.Symbol:
+            syms.append(expr)
+            cons.append(1)
+        elif type(expr) == sy.Pow:
+            var, exponent = expr.args
+            if type(var) == sy.Symbol:
+                syms.append(expr)
+                cons.append(1)
+            else:
+                cons.append(expr)
+        else:
+            for arg in expr.args:
+                if type(arg) == sy.Symbol:
+                    syms.append(arg)
+                elif type(arg) == sy.Pow:
+                    var, exponent = arg.args
+                    if type(var) == sy.Symbol:
+                        syms.append(arg)
+                    else:
+                        cons.append(arg)
+                else:
+                    cons.append(arg)
+
+        const_term = 1
+        syms_term = None
+        if len(cons) == 1:
+            const_term = cons[0]
+        elif len(cons) > 1:
+            const_term = sy.Mul(*cons)
+        if len(syms) == 1:
+            syms_term = syms[0]
+        elif len(syms) > 0:
+            syms_term = sy.Mul(*syms)
+        return const_term, syms_term
+
+    def as_quadratic_form_for_gradient_descent(self):
+        """
+        Rewrites the given function f as quadratic form that is
+        use for gradient descent algorithms.
+
+        The matrix Q and vector b is equal to f (except the constant term) if
+        following expression is computed:
+
+          1/2 * np.dot(np.dot(x.T, Q), x) - np.dot(b.T, x)
+        """
+        f = sy.expand(self._f[0])
+        x1 = self._x[0]
+        x2 = self._x[1]
+        a, b_or_c, d, b1, b2 = 0, 0, 0, 0, 0
+
+        for term in f.args:
+            const_term, syms_term = self.parse_term(term)
+
+            if syms_term is None:
+                print('Ignoring constant term: {}'.format(const_term))
+            elif type(syms_term) == sy.Pow:
+                var, exponent = syms_term.args
+                if not exponent == 2:
+                    raise Exception('Expected exponent to be 2 but was ' + str(exponent))
+                if var == x1:
+                    a = const_term
+                elif var == x2:
+                    d = const_term
+                else:
+                    raise Exception('Invalid variable found: ' + str(var))
+            elif type(syms_term) == sy.Mul:
+                var1, var2 = syms_term.as_two_terms()
+                if (var1 == x1 and var2 == x2) or (var2 == x1 and var1 == x2):
+                    b_or_c = const_term
+                else:
+                    raise Exception('Cannot handle product: ' + str(syms_term))
+            elif type(syms_term) == sy.Symbol:
+                if syms_term == x1:
+                    b1 = -1 * const_term
+                elif syms_term == x2:
+                    b2 = -1 * const_term
+                else:
+                    raise Exception('Contains an invalid product: ' + str(syms_term))
+            else:
+                raise Exception('Contains an invalid product: ' + str(syms_term))
+
+
+        # Build matrix Q and vector b so f is (except the constant term)
+        # f ~= 1/2 * np.dot(np.dot(x.T, Q), x) - np.dot(b.T, x)
+        Q = sy.Matrix([[a*2,     b_or_c],
+                      [b_or_c,  d*2]])
+        b = sy.Matrix([[b1],
+                       [b2]])
+        return Q, b
+
+    def find_step_size_range(self, Q=None):
+        """
+        Find the largest range of values of alpha for which
+        the fixed-step-size gradient descent algorithm is
+        globally convergent.
+        """
+        if Q is None:
+            Q, b = self.as_quadratic_form_for_gradient_descent()
+
+        eigenvalues = list(Q.eigenvals().keys())
+        lambda_max = np.max(eigenvalues)
+        upperbound = 2/lambda_max
+        return HTML('$0 < \\alpha < {}$'.format(upperbound))
+
+
+
     def __repr__(self):
         display(self._f)
         return ''
 
     def __str__(self):
         return str(self._f)
+
+
