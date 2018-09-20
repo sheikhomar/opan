@@ -29,6 +29,8 @@ def rewrite_as_quadratic_form(f, x1, x2):
                 var1, var2 = prod.as_two_terms()
                 if (var1 == x1 and var2 == x2) or (var2 == x1 and var1 == x2):
                     b_or_c = coeff
+                else:
+                    raise Exception('Cannot handle product: ' + str(prod))
             elif type(prod) == sy.Symbol:
                 if prod == x1:
                     b1 = -1 * coeff
