@@ -185,19 +185,19 @@ class OneDimensionalIterativeSearch:
         self._jacobian_lambda = sy.lambdify(self._x, self._jacobian)
         self._hessian = self._jacobian.jacobian(self._x)
         self._hessian_lambda = sy.lambdify(self._x, self._hessian)
-        
+
     def func_at(self, point):
         """
         Evaluates the function f at the given point.
         """
         return self._f_lambda(point)
-    
+
     def derivative_at(self, point):
         """
         Evaluates the first derivative f' at the given point.
         """
         return np.asscalar(self._jacobian_lambda(point))
-    
+
     def second_derivative_at(self, point):
         """
         Evaluates the second derivative f'' at the given point.
@@ -230,45 +230,45 @@ class NewtonSearch(OneDimensionalIterativeSearch):
         f_at_x_k = self.func_at(x_k)
         jacob_at_x_k = self.derivative_at(x_k)
         return x_k - (f_at_x_k / jacob_at_x_k)
-    
+
     def _run_algorithm(self, starting_point, epsilon, max_iterations, update_rule):
         x_k = starting_point
         has_converged = False
-        
+
         # Run iterations
         for k in range(1, max_iterations):
             # Apply update rule
             x_kp1 = update_rule(x_k)
-            
+
             # Check for convergence
             if np.abs(x_kp1 - x_k) < epsilon:
                 has_converged = True
-                
+
             # Update variables
             x_k = x_kp1
-            
+
             print('Iteration {0:2}: x(k)={1}'.format(k, x_k))
             if has_converged:
                 print(' Stopping condition reached!')
                 break
         if not has_converged:
             print(' Stopping condition never reached!')
-        
+
         return x_k
 
     def find_minimum(self, starting_point, epsilon=0.00001, max_iterations=21):
         return self._run_algorithm(
-            starting_point, 
-            epsilon, 
-            max_iterations, 
+            starting_point,
+            epsilon,
+            max_iterations,
             self._update_for_minimisation
         )
-    
+
     def find_root(self, starting_point, epsilon=0.00001, max_iterations=21):
         return self._run_algorithm(
-            starting_point, 
-            epsilon, 
-            max_iterations, 
+            starting_point,
+            epsilon,
+            max_iterations,
             self._update_for_root_finding
         )
 
@@ -285,45 +285,51 @@ class SecantSearch(OneDimensionalIterativeSearch):
         f_at_x_k   = self.func_at(x_k)
         f_at_x_km1 = self.func_at(x_km1)
         return x_k - ((x_k - x_km1) / (f_at_x_k - f_at_x_km1)) * f_at_x_k
-            
-    def _run_algorithm(self, x_minus1, x_0, epsilon, max_iterations, update_rule):
+
+    def _run_algorithm(self, x_minus1, x_0, epsilon, max_iterations, update_rule, verbose):
         x_km1 = x_minus1
         x_k = x_0
         has_converged = False
         for k in range(1, max_iterations):
             # Apply update rule
             x_kp1 = update_rule(x_km1, x_k)
-            
+
             # Check for convergence
             if np.abs(x_kp1 - x_k) < np.abs(x_k) * epsilon:
                 has_converged = True
-            
+
             # Update variables for next iteration
             x_km1 = x_k
             x_k   = x_kp1
-            
-            print('Iteration {0:2}: x({1})={2:.3f} x({3})={4:.3f}'.format(k, k-1, x_km1, k, x_k))
+
+            if verbose:
+                print('Iteration {0:2}: x({1})={2:.3f} x({3})={4:.3f}'.format(k, k-1, x_km1, k, x_k))
+
             if has_converged:
-                print(' Stopping condition reached!')
+                if verbose:
+                    print(' Stopping condition reached!')
                 break
         if not has_converged:
             print(' Stopping condition never reached!')
         return x_k
 
-    def find_minimum(self, x_minus1, x_0, epsilon=0.001, max_iterations=21):
+    def find_minimum(self, x_minus1, x_0, epsilon=0.001, max_iterations=21, verbose=True):
         return self._run_algorithm(
             x_minus1,
             x_0,
-            epsilon, 
-            max_iterations, 
-            self._update_for_minimisation
+            epsilon,
+            max_iterations,
+            self._update_for_minimisation,
+            verbose
         )
-    
-    def find_root(self, x_minus1, x_0, epsilon=0.001, max_iterations=21):
+
+    def find_root(self, x_minus1, x_0, epsilon=0.001, max_iterations=21, verbose=True):
         return self._run_algorithm(
             x_minus1,
             x_0,
-            epsilon, 
-            max_iterations, 
-            self._update_for_root_finding
+            epsilon,
+            max_iterations,
+            self._update_for_root_finding,
+            verbose
         )
+
