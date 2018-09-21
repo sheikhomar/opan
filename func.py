@@ -9,13 +9,13 @@ from IPython.display import display, HTML
 class Func:
     def __init__(self, f, x, constraints=None):
         self._f = sy.Matrix([f])
-        self._x = x
+        self._x = sy.Matrix(x)
         self._constraints = constraints
-        self._f_lambda = sy.lambdify(x, self._f)
-        self._jacobian = self._f.jacobian(x)
-        self._jacobian_lambda = sy.lambdify(x, self._jacobian)
-        self._hessian = self._jacobian.jacobian(x)
-        self._hessian_lambda = sy.lambdify(x, self._hessian)
+        self._f_lambda = sy.lambdify(self._x, self._f)
+        self._jacobian = self._f.jacobian(self._x)
+        self._jacobian_lambda = sy.lambdify(self._x, self._jacobian)
+        self._hessian = self._jacobian.jacobian(self._x)
+        self._hessian_lambda = sy.lambdify(self._x, self._hessian)
 
     def evalf(self, points):
         """
@@ -28,7 +28,11 @@ class Func:
                 print('Evaluting f{} = {}'.format(point, result[0]))
         else:
             params = dict(zip(self._x, points))
-            return self._f.evalf(subs=params),
+            return self._f.evalf(subs=params)
+
+    def subs(self, point):
+        params = dict(zip(self._x, point))
+        return self._f.subs(params)
 
     def solve_lagrangian(self):
         num_constraints = len(self._constraints)
@@ -59,22 +63,18 @@ class Func:
         return points, lambdas
 
     def gradient(self):
-        return self._jacobian
+        return self._jacobian.T
 
     def hessian(self):
         return self._hessian
 
     def gradient_at(self, point):
-        return self._jacobian.subs({
-            self._x[0]: point[0],
-            self._x[1]: point[1]
-        })
+        params = dict(zip(self._x, point))
+        return self.gradient().subs(params)
 
     def hessian_at(self, point):
-        return self._hessian.subs({
-            self._x[0]: point[0],
-            self._x[1]: point[1]
-        })
+        params = dict(zip(self._x, point))
+        return self.hessian().subs(params)
 
     def rate_of_increase(self, point):
         gradient_at_point = sy.lambdify(self._x, self._jacobian)(*tuple(point))
