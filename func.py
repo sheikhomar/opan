@@ -68,6 +68,9 @@ class Func:
     def hessian(self):
         return self._hessian
 
+    def func(self):
+        return self._f
+
     def gradient_at(self, point):
         params = dict(zip(self._x, point))
         return self.gradient().subs(params)
@@ -75,6 +78,10 @@ class Func:
     def hessian_at(self, point):
         params = dict(zip(self._x, point))
         return self.hessian().subs(params)
+
+    def func_at(self, point):
+        params = dict(zip(self._x, point))
+        return self.func().subs(params)
 
     def rate_of_increase(self, point):
         gradient_at_point = sy.lambdify(self._x, self._jacobian)(*tuple(point))
