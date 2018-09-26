@@ -385,7 +385,25 @@ class Func:
         upperbound = 2/lambda_max
         return HTML('$0 < \\alpha < {}$'.format(upperbound))
 
+    def plot_contour(self, figsize=(12,6), x_limit=(-4, 4), delta=0.0025, levels=10):
+        if len(self._x) != 2:
+            raise Exception('Cannot draw contour plot with {0} variables.'.format(len(self._x)))
 
+        x1_vals = np.arange(x_limit[0], x_limit[1], delta)
+        x2_vals = np.arange(x_limit[0], x_limit[1], delta)
+        X1, X2 = np.meshgrid(x1_vals, x2_vals)
+
+        # Compute Z values
+        Z = self._f_lambda(X1, X2)
+
+        # Reshape Z so it is 2D matrix
+        Z = Z.reshape(Z.shape[2], Z.shape[2])
+
+        fig, ax = plt.subplots(figsize=figsize)
+        conourSet1 = ax.contourf(X1, X2, Z, levels)
+        fig.colorbar(conourSet1, ax=ax)
+        ax.set_title('Contour plot for ${}$'.format(sy.latex(self._f[0])))
+        return fig, ax
 
     def __repr__(self):
         display(self._f)
