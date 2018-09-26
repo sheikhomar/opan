@@ -17,12 +17,6 @@ class Func:
         self._hessian = self._jacobian.jacobian(self._x)
         self._hessian_lambda = sy.lambdify(self._x, self._hessian)
 
-    def get_func(self):
-        return self._f
-
-    def get_func_args(self):
-        return self._x
-
     def evalf(self, points):
         """
         Evaluates the function at a certain point.
@@ -39,6 +33,56 @@ class Func:
     def subs(self, point):
         params = dict(zip(self._x, point))
         return self._f.subs(params)
+
+    def func_args(self):
+        return self._x
+
+    def func(self):
+        return self._f
+
+    def gradient(self):
+        return self._jacobian.T
+
+    def hessian(self):
+        return self._hessian
+
+    def func_at(self, point):
+        params = dict(zip(self._x, point))
+        return self.func().subs(params)
+
+    def gradient_at(self, point):
+        params = dict(zip(self._x, point))
+        return self.gradient().subs(params)
+
+    def hessian_at(self, point):
+        params = dict(zip(self._x, point))
+        return self.hessian().subs(params)
+
+
+    def rate_of_increase(self, point):
+        gradient_at_point = sy.lambdify(self._x, self._jacobian)(*tuple(point))
+        unit_vector = gradient_at_point / np.linalg.norm(gradient_at_point)
+        return np.dot(gradient_at_point, unit_vector.T)
+
+    def fonc_points(self):
+        """
+        Finds all the points that satisfy the First-Order Necessary Condition
+        assuming that all the points are interior. This means that we need to
+        solve the equation Df(x*)=0 for x*
+        """
+        return sy.nonlinsolve(self._jacobian, self._x)
+
+    def satisfies_sonc(self, point):
+        """
+        Determines whether a point satisfies the Second-Order Necessary Condition.
+        If the SONC is not satisfied then we have a saddle point.
+
+        When the determinant of the Hessian matrix is positive, then we know that
+        we have either a minimum or a maximum.
+
+        The determinant of positive semidefinite is multiplication of its eigenvalues.
+        """
+        return self.hessian_at(point).det() >= 0
 
     def solve_lagrangian(self):
         num_constraints = len(self._constraints)
@@ -67,72 +111,6 @@ class Func:
         lambdas = [tup[-num_constraints:] for tup in list(result)]
 
         return points, lambdas
-
-    def gradient(self):
-        return self._jacobian.T
-
-    def hessian(self):
-        return self._hessian
-
-    def func(self):
-        return self._f
-
-    def gradient_at(self, point):
-        params = dict(zip(self._x, point))
-        return self.gradient().subs(params)
-
-    def hessian_at(self, point):
-        params = dict(zip(self._x, point))
-        return self.hessian().subs(params)
-
-    def func_at(self, point):
-        params = dict(zip(self._x, point))
-        return self.func().subs(params)
-
-    def rate_of_increase(self, point):
-        gradient_at_point = sy.lambdify(self._x, self._jacobian)(*tuple(point))
-        unit_vector = gradient_at_point / np.linalg.norm(gradient_at_point)
-        return np.dot(gradient_at_point, unit_vector.T)
-
-    def fonc_points(self):
-        """
-        Finds all the points that satisfy the First-Order Necessary Condition
-        assuming that all the points are interior. This means that we need to
-        solve the equation Df(x*)=0 for x*
-        """
-        return sy.nonlinsolve(self._jacobian, self._x)
-
-    def satisfies_sonc(self, point):
-        """
-        Determines whether a point satisfies the Second-Order Necessary Condition.
-        If the SONC is not satisfied then we have a saddle point.
-
-        When the determinant of the Hessian matrix is positive, then we know that
-        we have either a minimum or a maximum.
-
-        The determinant of positive semidefinite is multiplication of its eigenvalues.
-        """
-        return self.hessian_at(point).det() >= 0
-
-    def plot_point(self, point):
-        x_limit = 10
-        y_limit = 5
-        fig = plt.figure(1, figsize=(8,4))
-        ax = SubplotZero(fig, 1, 1, 1)
-        fig.add_subplot(ax)
-        ax.grid(color='#eeeeee', linestyle='-', linewidth=2)
-        ax.set_xticks(np.arange(-1*x_limit, x_limit, 1))
-        ax.set_xlim(-1*x_limit, x_limit)
-        ax.set_yticks(np.arange(-1*y_limit, y_limit, 1))
-        ax.set_ylim(-1*y_limit, y_limit)
-        ax.axis['xzero'].set_axisline_style('-|>')
-        ax.axis['xzero'].set_visible(True)
-        ax.axis["xzero"].label.set_text('$x_1$')
-        ax.axis['yzero'].set_axisline_style('-|>')
-        ax.axis['yzero'].set_visible(True)
-        ax.axis["yzero"].label.set_text('$x_2$')
-        ax.plot(*point,'ro',label='$x^{*}$')
-        ax.legend();
 
     def fonc_at(self, point):
         """
@@ -216,20 +194,6 @@ class Func:
 
         # If the first entry of the Hessian is negative or zero, then we have a maximum.
         return 'The point {} is a local maximum.'.format(point)
-
-    def plot(self, range_x=None, range_y=None):
-        if range_x is not None and len(range_x) == 2:
-            range_x = (self._x[0], range_x[0], range_x[1])
-        else:
-            range_x = (self._x[0], -10, 10)
-        if range_y is not None and len(range_y) == 2:
-            range_y = (self._x[1], range_y[0], range_y[1])
-        else:
-            range_y = (self._x[1], -10, 10)
-        plot = sy.plotting.plot3d(self._f[0], range_x, range_y, show=False, legend=False)
-        plot.xlabel = self._x[0]
-        plot.ylabel = self._x[1]
-        plot.show()
 
     def create(A, b, term3):
         x = sy.symbols('x1, x2', real=True)
@@ -385,7 +349,41 @@ class Func:
         upperbound = 2/lambda_max
         return HTML('$0 < \\alpha < {}$'.format(upperbound))
 
-    def plot_contour(self, figsize=(12,6), x_limit=(-4, 4), delta=0.0025, levels=10):
+    def plot(self, range_x=None, range_y=None):
+        if range_x is not None and len(range_x) == 2:
+            range_x = (self._x[0], range_x[0], range_x[1])
+        else:
+            range_x = (self._x[0], -10, 10)
+        if range_y is not None and len(range_y) == 2:
+            range_y = (self._x[1], range_y[0], range_y[1])
+        else:
+            range_y = (self._x[1], -10, 10)
+        plot = sy.plotting.plot3d(self._f[0], range_x, range_y, show=False, legend=False)
+        plot.xlabel = self._x[0]
+        plot.ylabel = self._x[1]
+        plot.show()
+
+    def plot_point(self, point):
+        x_limit = 10
+        y_limit = 5
+        fig = plt.figure(1, figsize=(8,4))
+        ax = SubplotZero(fig, 1, 1, 1)
+        fig.add_subplot(ax)
+        ax.grid(color='#eeeeee', linestyle='-', linewidth=2)
+        ax.set_xticks(np.arange(-1*x_limit, x_limit, 1))
+        ax.set_xlim(-1*x_limit, x_limit)
+        ax.set_yticks(np.arange(-1*y_limit, y_limit, 1))
+        ax.set_ylim(-1*y_limit, y_limit)
+        ax.axis['xzero'].set_axisline_style('-|>')
+        ax.axis['xzero'].set_visible(True)
+        ax.axis["xzero"].label.set_text('$x_1$')
+        ax.axis['yzero'].set_axisline_style('-|>')
+        ax.axis['yzero'].set_visible(True)
+        ax.axis["yzero"].label.set_text('$x_2$')
+        ax.plot(*point,'ro',label='$x^{*}$')
+        ax.legend();
+
+    def plot_contour(self, figsize=(12,6), x_limit=(-4, 4), delta=0.0025, levels=10, filled=True):
         if len(self._x) != 2:
             raise Exception('Cannot draw contour plot with {0} variables.'.format(len(self._x)))
 
@@ -400,7 +398,7 @@ class Func:
         Z = Z.reshape(Z.shape[2], Z.shape[2])
 
         fig, ax = plt.subplots(figsize=figsize)
-        conourSet1 = ax.contourf(X1, X2, Z, levels)
+        conourSet1 = ax.contourf(X1, X2, Z, levels) if filled else ax.contour(X1, X2, Z, levels)
         fig.colorbar(conourSet1, ax=ax)
         ax.set_title('Contour plot for ${}$'.format(sy.latex(self._f[0])))
         return fig, ax
