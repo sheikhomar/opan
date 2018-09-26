@@ -17,6 +17,12 @@ class Func:
         self._hessian = self._jacobian.jacobian(self._x)
         self._hessian_lambda = sy.lambdify(self._x, self._hessian)
 
+    def get_func(self):
+        return self._f
+
+    def get_func_args(self):
+        return self._x
+
     def evalf(self, points):
         """
         Evaluates the function at a certain point.
