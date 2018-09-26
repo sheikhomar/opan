@@ -325,8 +325,6 @@ class Func:
                     raise Exception('Contains an invalid product: ' + str(syms_term))
             else:
                 raise Exception('Contains an invalid product: ' + str(syms_term))
-
-
         # Build matrix Q and vector b so f is (except the constant term)
         # f ~= 1/2 * np.dot(np.dot(x.T, Q), x) - np.dot(b.T, x)
         Q = sy.Matrix([[a*2,     b_or_c],
