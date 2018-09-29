@@ -45,3 +45,46 @@ def prepare_plot(x, y, xlimit=(-10, 10), ylimit=None, show_spines=True, figsize=
         ax.spines['top'].set_color('none')
     return fig, ax
 
+class HtmlTableBuilder:
+    def __init__(self, column_headers):
+        self._column_headers = column_headers
+        self._ncols = len(self._column_headers)
+        # Create the first row
+        self._rows = []
+        self._current_row = -1
+    
+    def new_row(self):
+        self._rows.append([''] * self._ncols)
+        self._current_row += 1
+        
+    def text_cell(self, cell_index, val):
+        self._rows[self._current_row][cell_index] = val
+    
+    def math_cell(self, cell_index, val):
+        self._rows[self._current_row][cell_index] = '${0}$'.format(val)
+
+    def array_cell(self, cell_index, val, formatting=':.5f'):
+        html = '$\\begin{bmatrix}'
+        for el in val:
+            html += '{0} \\\\'.format(el)
+        html += '\\end{bmatrix}$'
+        self.text_cell(cell_index, html)
+    
+    def _repr_html_(self):
+        html_out = '<table><thead><tr>'
+        for header in self._column_headers:
+            html_out += '<th style="text-align:center;">{0}</th>'.format(header)
+        html_out += '</tr></thead><tbody>'
+        for row in self._rows:
+            html_out += '<tr>'
+            
+            for cell in range(self._ncols):
+                if cell < len(row):
+                    html_out += '<td style="text-align:left;">{0}</td>'.format(row[cell])
+                else:
+                    html_out += '<td>.</td>'
+            
+            html_out += '</tr>'
+        html_out += ''
+        html_out += '</tbody></table>'
+        return html_out

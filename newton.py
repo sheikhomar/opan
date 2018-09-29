@@ -56,12 +56,12 @@ class NewtonMultivariateSearch:
         # to zero e.g. |f(x_k)| < epsilon
         return self._f.func_at(x_k) < epsilon
     
-    def _run_algorithm(self, starting_point, epsilon: float, max_iterations: int, update_rule, convergence_rule):
+    def _run_algorithm(self, starting_point, epsilon: float, max_iterations: int, update_rule, convergence_rule, verbose=True):
         x_k = sy.Matrix(starting_point)
         has_converged = False
 
         # Run iterations
-        for k in range(1, max_iterations):
+        for k in range(1, max_iterations+1):
             
             # Apply update rule
             x_kp1 = update_rule(x_k)
