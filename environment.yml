@@ -17,3 +17,5 @@ dependencies:
   - tensorflow
   - keras
   - pydot
+  - imagemagick
+
