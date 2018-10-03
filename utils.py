@@ -6,7 +6,7 @@ from fractions import Fraction
 from IPython.display import HTML, display
 
 # Show decimal numbers as fractions
-np.set_printoptions(formatter={'all':lambda x: str(Fraction(x).limit_denominator())})
+# np.set_printoptions(formatter={'all':lambda x: str(Fraction(x).limit_denominator())})
 
 def to_frac(x):
     return str(Fraction(x).limit_denominator())
