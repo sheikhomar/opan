@@ -1,0 +1,13 @@
+.sidenote {
+  border: solid 1px green;
+  background: #cdffd8;
+  padding: 10px;
+  border-radius: 2px;
+}
+
+.warning {
+  border: solid 1px #8a6d3b;
+  background: #fcf8e3;
+  padding: 10px;
+  border-radius: 2px;
+}
