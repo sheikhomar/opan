@@ -57,24 +57,29 @@ class HtmlTableBuilder:
         # Create the first row
         self._rows = []
         self._current_row = -1
-    
+
     def new_row(self):
         self._rows.append([''] * self._ncols)
         self._current_row += 1
-        
+
     def text_cell(self, cell_index, val):
         self._rows[self._current_row][cell_index] = val
-    
+
     def math_cell(self, cell_index, val):
         self._rows[self._current_row][cell_index] = '${0}$'.format(val)
 
-    def array_cell(self, cell_index, val, formatting=':.5f'):
-        html = '$\\begin{bmatrix}'
+    def array_cell(self, cell_index, val, element_format='%.5f'):
+        html = '\\begin{bmatrix}'
         for el in val:
-            html += '{0} \\\\'.format(el)
-        html += '\\end{bmatrix}$'
+            html += element_format % el
+            html += ' \\\\ '
+        html += '\\end{bmatrix}'
+        html += '&nbsp;'
         self.text_cell(cell_index, html)
-    
+
+    def as_html(self):
+        return self._repr_html_()
+
     def _repr_html_(self):
         html_out = '<table><thead><tr>'
         for header in self._column_headers:
@@ -82,13 +87,13 @@ class HtmlTableBuilder:
         html_out += '</tr></thead><tbody>'
         for row in self._rows:
             html_out += '<tr>'
-            
+
             for cell in range(self._ncols):
                 if cell < len(row):
                     html_out += '<td style="text-align:left;">{0}</td>'.format(row[cell])
                 else:
                     html_out += '<td>.</td>'
-            
+
             html_out += '</tr>'
         html_out += ''
         html_out += '</tbody></table>'

@@ -4,6 +4,7 @@ import sympy as sy
 
 from mpl_toolkits.axisartist.axislines import SubplotZero
 from IPython.display import display, HTML
+from fractions import Fraction
 
 
 class Func:
@@ -44,7 +45,7 @@ class Func:
         return self._jacobian.T
 
     def hessian(self):
-        return self._hessian
+        return self._hessian_lambda
 
     def func_at(self, point):
         params = dict(zip(self._x, point))
@@ -210,6 +211,19 @@ class Func:
          x.T*Q*x + x.T*b + c
         """
         return Func.create(Q, b, c)
+
+    def create_quadratic_half(Q, b):
+        """
+        Creates a quadratic function of the form:
+         1/2*x.T*Q*x  -  x.T*b
+        """
+        Q = sy.Matrix(Q)
+        b = sy.Matrix(b)
+        num_variables = int(Q.shape[0])
+        x_symbols = sy.symbols('x1:'+ str(num_variables+1))
+        x = sy.Matrix(x_symbols)
+        f = sy.expand(Fraction(1, 2) * x.T * Q * x - x.T * b)[0]
+        return Func(f, x_symbols)
 
     def taylor(self, x0):
         """
