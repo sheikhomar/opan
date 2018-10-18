@@ -59,6 +59,8 @@ class Func:
         params = dict(zip(self._x, point))
         return self.hessian().subs(params)
 
+    def dimensions(self):
+        return self._x.shape[0]
 
     def rate_of_increase(self, point):
         gradient_at_point = sy.lambdify(self._x, self._jacobian)(*tuple(point))
