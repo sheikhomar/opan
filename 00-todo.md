@@ -1,5 +1,6 @@
 # TODO
 - Implement chromosome-based genetic algorithm
+- Complete the in-class exercise for lecture 12
 
 # DONE
 - ~~Lecture notes for Particle Swarm Optimisation~~
