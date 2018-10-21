@@ -1,6 +1,8 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import sympy as sy
+
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 
 from mpl_toolkits.axisartist.axislines import SubplotZero
 from IPython.display import display, HTML

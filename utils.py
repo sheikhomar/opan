@@ -1,9 +1,11 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import sympy as sy
 
 from fractions import Fraction
 from IPython.display import HTML, display
+
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 
 # Show decimal numbers as fractions
 # np.set_printoptions(formatter={'all':lambda x: str(Fraction(x).limit_denominator())})
@@ -33,6 +35,7 @@ def prepare_plot(x, y, xlimit=(-10, 10), ylimit=None, show_spines=True, figsize=
     ax.set_ylabel('$f(x)$')
     ax.set_xlim(*xlimit)
     ax.set_ylim(*ylimit)
+    ax.set_axisbelow(True)
     if show_spines:
         x_min = min(xlimit[0], xlimit[1])
         if xlimit[0] < 0 and xlimit[1] > 0:
