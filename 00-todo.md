@@ -5,6 +5,9 @@
 - Complete lecture notes for lecture 15 (Introduction to Data Analytics)
 - Complete lecture notes for lecture 16 (Unsupervised Learning, Clustering)
 - Complete homework 16 (Unsupervised Learning)
+- Complete lecture notes for lecture 17
+- Complete lecture notes for lecture 18
+- Complete homework 18
 
 # DONE
 - ~~Lecture notes for Particle Swarm Optimisation~~
