@@ -1,3 +1,17 @@
+.summary {
+  border: solid 1px green;
+  background: #cdffd8;
+  padding: 10px;
+  border-radius: 2px;
+}
+
+.insight {
+  border: solid 1px green;
+  background: #cdffd8;
+  padding: 10px;
+  border-radius: 2px;
+}
+
 .sidenote {
   border: solid 1px green;
   background: #cdffd8;
