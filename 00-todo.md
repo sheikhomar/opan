@@ -13,8 +13,8 @@
 - Complete lecture notes for lecture 15 (Introduction to Data Analytics)
 - Complete lecture notes for lecture 16 (Unsupervised Learning, Clustering)
 - Complete lecture notes for lecture 18
-- Write lecture notes for lecture 19
-- Complete homework 20 (Exercise 4.4)
+- Complete lecture notes for lecture 19
+- Write lecture notes for lecture 20
 
 
 # DONE
@@ -25,3 +25,4 @@
 - ~~Complete lecture notes for lecture 17~~
 - ~~Complete homework 16 (Unsupervised Learning)~~
 - ~~Complete homework 18 (Exercise 3.3, 3.4 and 3.5)~~
+- ~~Complete homework 20 (Exercise 4.4)~~
