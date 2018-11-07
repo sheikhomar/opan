@@ -22,7 +22,13 @@ def to_decimal(numpy_array):
     return [float(el) for el in numpy_array]
 
 def format_vector(vec):
-    return str(['{0:0.4f}'.format(float(entry)) for entry in vec])
+    output = '['
+    for i, entry in enumerate(vec):
+        if i > 0:
+            output += ', '
+        output += '{0: .4f}'.format(float(entry))
+    output += ']'
+    return output
 
 def prepare_plot(x, y, xlimit=(-10, 10), ylimit=None, show_spines=True, figsize=(10, 6)):
     if ylimit is None:
