@@ -1,6 +1,5 @@
 # Questions for lecturer or TA
-- Homework 16, Exercise 2.1: Why can we use the Trace operator in Eq. 2.4? Where does the constant come from?
-- Homework 18: Exercuse 3.1: Computation of the conditional probability gives the wrong result. Help!
+
 
 # Questions for the project
 - The implmenetation of Nearest Neighbour: only for k=1 in kNN?
