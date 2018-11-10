@@ -3,6 +3,7 @@
 
 # Questions for the project
 - The implmenetation of Nearest Neighbour: only for k=1 in kNN?
+- The implementation of Perceptron Backpropagation (skip ahead in the book?)
 
 
 # TODO
@@ -14,6 +15,8 @@
 - Complete lecture notes for lecture 18
 - Complete lecture notes for lecture 19
 - Write lecture notes for lecture 20
+- Complete lecture notes for lecture 22
+- Complete homework 22
 
 
 # DONE
