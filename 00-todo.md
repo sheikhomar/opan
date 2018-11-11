@@ -1,5 +1,5 @@
 # Questions for lecturer or TA
-
+- Homework 22: Exercise 4.5 Don't understand the reasoning for the proof.
 
 # Questions for the project
 - The implmenetation of Nearest Neighbour: only for k=1 in kNN?
