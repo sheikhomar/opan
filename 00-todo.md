@@ -1,9 +1,10 @@
 # Questions for lecturer or TA
-- Homework 22: Exercise 4.5 Don't understand the reasoning for the proof.
+- Homework 22: Exercise 4.5: Don't understand the reasoning for the proof.
+- Homework 22: Exercise 5.2: Is it correct?
+
 
 # Questions for the project
 - The implmenetation of Nearest Neighbour: only for k=1 in kNN?
-- The implementation of Perceptron Backpropagation (skip ahead in the book?)
 
 
 # TODO
@@ -17,6 +18,7 @@
 - Write lecture notes for lecture 20
 - Complete lecture notes for lecture 22
 - Complete homework 22
+- Write lecture notes for lecture 23
 
 
 # DONE
