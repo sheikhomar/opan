@@ -59,6 +59,39 @@ def prepare_plot(x, y, xlimit=(-10, 10), ylimit=None, show_spines=True, figsize=
         ax.spines['top'].set_color('none')
     return fig, ax
 
+
+def create_simplex_tableau(A, b):
+    A = np.array(A)
+    b = np.array(b)
+    html_out = '<table class="simplex-tableaux"><thead><tr>'
+    N_variables = A.shape[1]
+    N_slack = A.shape[0]-1
+    N_rows = A.shape[0]
+    for i in range(N_variables):
+        html_out += f'<th style="text-align:center;">$x_{i}$</th>'
+    for i in range(N_slack):
+        html_out += f'<th style="text-align:center;">$s_{i}$</th>'
+    html_out += f'<th style="text-align:center;">$M$</th>'
+    html_out += f'<th style="text-align:center;">$b$</th>'
+    html_out += '</tr></thead><tbody>'
+    for row in range(N_rows):
+        is_last_row = row == (N_rows-1)
+        html_out += f'<tr class="{"last-row" if is_last_row else ""}">'
+
+        for column in range(N_variables):
+            cell = A[row, column]
+            min_row_val = A[row].min()
+            class_name = 'smallest-value' if is_last_row and min_row_val == cell else ''
+            html_out += f'<td class="{class_name}">{cell}</td>'
+        for column in range(N_rows):
+            html_out += f'<td>{1 if column == row else 0}</td>'
+        html_out += f'<td>{b[row]}</td>'
+        html_out += '</tr>'
+    html_out += ''
+    html_out += '</tbody></table>'
+    return HTML(html_out)
+
+
 class HtmlTableBuilder:
     def __init__(self, column_headers):
         self._column_headers = column_headers

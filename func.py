@@ -105,7 +105,7 @@ class Func:
 
         # Find the gradient of the Lagrangian function
         # with respect to all parameters
-        all_params = self._x + lambdas
+        all_params = tuple(self._x) + lambdas
         Dl = l.jacobian(all_params)
 
         # Solve it with respect to all the parameters

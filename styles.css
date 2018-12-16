@@ -33,3 +33,17 @@
 .red {
   color: #cc0000;
 }
+
+.simplex-tableaux {
+    font-size: 13pt;
+}
+
+.last-row td {
+    border-top: solid 1px Black;
+}
+
+.smallest-value {
+    background-color: Green;
+    color: White;
+    font-weight: bold;
+}
