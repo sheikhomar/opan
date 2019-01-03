@@ -96,7 +96,7 @@ class Func:
         H = sy.Matrix(self._constraints)
 
         # Formulate the Lagrangian function l
-        l = self._f + lambda_vec.T * H
+        l = self._f - lambda_vec.T * H
 
         # Find the gradient of the Lagrangian function
         # with respect to all parameters
@@ -112,6 +112,21 @@ class Func:
 
         return points, lambdas
 
+    def lagrangian_condition(self):
+        nabla_f = self.gradient()
+        nabla_h = sy.Matrix(self._constraints).jacobian(self.func_args()).T
+        out = '\\begin{align*}'
+        for i, f_partial in enumerate(nabla_f):
+            h_partial = nabla_h[i]
+            out += f'{f_partial} + \lambda ( {h_partial} ) &= 0 \\\\'
+        for c in self._constraints:
+            out += f'{c} &= 0 \\\\'
+        out += '\\end{align*}'
+        out = out.replace('*', '')
+        return HTML(out)
+            
+        
+    
     def fonc_at(self, point):
         """
         Computes the First-Order Necessary Condition at a given point.
