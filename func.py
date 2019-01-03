@@ -59,15 +59,10 @@ class Func:
 
     def hessian_at(self, point):
         params = dict(zip(self._x, point))
-        return self.hessian().subs(params)
+        return self._hessian.subs(params)
 
     def dimensions(self):
         return self._x.shape[0]
-
-    def rate_of_increase(self, point):
-        gradient_at_point = sy.lambdify(self._x, self._jacobian)(*tuple(point))
-        unit_vector = gradient_at_point / np.linalg.norm(gradient_at_point)
-        return np.dot(gradient_at_point, unit_vector.T)
 
     def fonc_points(self):
         """
@@ -75,7 +70,7 @@ class Func:
         assuming that all the points are interior. This means that we need to
         solve the equation Df(x*)=0 for x*
         """
-        return sy.nonlinsolve(self._jacobian, self._x)
+        return sy.nonlinsolve(self._jacobian, tuple(self._x))
 
     def satisfies_sonc(self, point):
         """
@@ -135,13 +130,12 @@ class Func:
             print(self.classify_critical_point(point))
         return points
 
-    def classify_critical_point2(self, point):
+    def classify_critical_point(self, point):
         """
         Determines whether a given point is a saddle point.
-        This is the same as checking whether a point satisfies the Second-Order
-        Necessary Condition.
         """
-        # Compute the Hessian at the given point
+        # Compute the Hessian at the given point since it
+        # tells us how the function behaves around the critical point.
         H_sympy = self.hessian_at(point)
 
         # Convert SymPy matrix to NumPy matrix
@@ -150,15 +144,19 @@ class Func:
         # Compute the eigen values
         eigenvals = np.linalg.eigvals(H)
 
-        # Check of positive and negative eigenvalues
-        has_positive_eigenvals = len(eigenvals[eigenvals >= 0]) > 0
+        # Check for positive and negative eigenvalues
+        has_positive_eigenvals = len(eigenvals[eigenvals > 0]) > 0
         has_negative_eigenvals = len(eigenvals[eigenvals < 0]) > 0
+        has_zero_eigenvals = len(eigenvals[eigenvals == 0]) > 0
         has_only_positive_eigenvals = has_positive_eigenvals and not has_negative_eigenvals
         has_only_negative_eigenvals = not has_positive_eigenvals and has_negative_eigenvals
 
+        if has_zero_eigenvals:
+            return "The point {} has a zero eigenvalue and so the test fails. The second order approximation isn't good enough and we need higher order information to make a decision.".format(point)
+        
         # When the Hessian has both positive and negative
         # eigenvalues, the point is a saddle point
-        # i.e. Hessian is not positive semidefinite
+        # i.e. Hessian is indefinite
         if has_positive_eigenvals and has_negative_eigenvals:
             return 'The point {} is a saddle point.'.format(point)
 
@@ -175,30 +173,6 @@ class Func:
             return 'The point {} is a local maximum.'.format(point)
 
         return 'Unknown'
-
-    def classify_critical_point(self, point):
-        """
-        Determines whether a given point is a saddle point.
-        This is the same as checking whether a point satisfies the Second-Order
-        Necessary Condition.
-        """
-        # Compute the Hessian at the given point
-        H = self.hessian_at(point)
-
-        # If the determinant of the Hessian matrix is negative,
-        # then we have a saddle point.
-        if H.det() < 0:
-            return 'The point {} is a saddle point.'.format(point)
-
-        # If the determinant of the Hessian matrix is positive,
-        # then we know that we have either a minimum or a maximum.
-
-        # If the first entry of the Hessian is positive, then we have a minimum.
-        if H[0,0] > 0:
-            return 'The point {} is a local minimum.'.format(point)
-
-        # If the first entry of the Hessian is negative or zero, then we have a maximum.
-        return 'The point {} is a local maximum.'.format(point)
 
     def create(A, b, term3):
         x = sy.symbols('x1, x2', real=True)
@@ -235,29 +209,28 @@ class Func:
         given point x0.
         """
         # Compute the vector: x-x0 since we are going to use multiple times
-        x_minus_x0 = (np.array(self._x) - np.array(x0)).reshape(2, -1)
+        x_minus_x0  = self._x - sy.Matrix(x0)
 
         # Compute f(x0)
-        term1 = self._f_lambda(*x0)
+        term1 = self.func_at(x0)
 
         # Compute dfdx(x0)*(x-x0)
-        term2 = np.dot(self._jacobian_lambda(*x0), x_minus_x0)
+        term2 = self.gradient_at(x0).T * x_minus_x0
 
         # Compute p1 = 1/2*(x-x0)
         p1 = sy.Rational(1, 2) * x_minus_x0
 
         # Compute p2 = p1^T * Hessian(x0)
-        p2 = np.dot(p1.T, self._hessian_lambda(*x0))
+        p2 = p1.T * self.hessian_at(x0)
 
         # Compute term3 = p2 * (x-x0)
-        term3 = np.dot(p2, x_minus_x0)
+        term3 = p2 * x_minus_x0
 
-        result = (term1 + term2 + term3)[0][0]
+        result = term1 + term2 + term3
 
         # Simplify the sum of all the terms
-        simplified_result = sy.simplify(term1 + term2 + term3)[0]
-
-        return simplified_result
+        # return sy.simplify(result)
+        return result
 
     def parse_term(self, expr):
         syms = []
