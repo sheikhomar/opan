@@ -384,6 +384,72 @@
     </div>
 
 
+
+
+    <!-- LECTURE SECTION -->
+    <div class="lecture">
+      <button class="collapsible">Lecture 10: Newton's Method in Multivariate Optimisation Problems</button>
+      <div class="content">
+        <h2 class="keywords">Keywords</h2>
+        <ul>
+          <li>Definiteness of Matrices</li>
+          <li>Trust Region Algorithm</li>
+          <li>Quasi-Newton
+            <ul>
+              <li>Replaces Jakobian (root finding) and Hessian (optimisation) with an approximation</li>
+              <li>Avoids expensive computation</li>
+              <li>Generalise the secant method</li>
+              <li>Fast and more robust than Newton</li>
+              <li>Quasi-Newton condition: B must satisfy a condition</li>
+            </ul>
+          </li>
+          <li>Conjugate Direction Method
+            <ul>
+              <li>finds directions that are "conjugate"</li>
+              <li>generating Q-conjugate directions are computationally expensive</li>
+            </ul>
+          </li>
+          
+          <li>Conjugate Gradient Method
+            <ul>
+              <li>incorporates the generation of Q-conjugate directions at each step</li>
+              <li>avoids classic zigzag behaviour from steepest descent</li>
+              <li>combine all these zigzags into one step per "direction"</li>
+              <li>use the gradient to find these “conjugate” directions really efficiently (can even do this
+                  incrementally as we go)</li>
+            </ul>
+          </li>
+          <li>Gram-Schmidt process make linearly independent vectors orthogonal</li>
+          <li>Conjugate Gradient vs Steepest Descent</li>
+        </ul>
+
+        <h2 class="slides">Slides</h2>
+        <ul class="slides">
+          <li><a href="slides/10.0.pdf" target="_blank">Slides</a></li>
+        </ul>
+
+        <h2 class="lecture-notes">Lecture Notes</h2>
+        <ul class="lecture-notes">
+          <li><a href="./lec10.html" target="_blank">Lecture notes</a></li>
+        </ul>
+
+        <h2 class="homework">Homework</h2>
+        <ul class="homework">
+          <li>
+            <a href="./hw10.html" target="_blank">Homework 10</a>
+            <ul>
+              <li>Contour plot</li>
+              <li>Find a formula using the Q-conjucate method (<strong>study more</strong>)</li>
+              <li>Express a function in a quadratic form</li>
+              <li>Find minimiser of a quadratic function using conjucate gradient method</li>
+              <li>Analytically find the minimiser of a quadratic function</li>
+            </ul>
+          </li>
+        </ul>
+      </div>    
+    </div>
+
+
   </div>
  
   <script src="main.js"></script>
