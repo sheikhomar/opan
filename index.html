@@ -439,10 +439,112 @@
             <a href="./hw10.html" target="_blank">Homework 10</a>
             <ul>
               <li>Contour plot</li>
-              <li>Find a formula using the Q-conjucate method (<strong>study more</strong>)</li>
+              <li>Find a formula using the Q-conjugate method (<strong>study more</strong>)</li>
               <li>Express a function in a quadratic form</li>
-              <li>Find minimiser of a quadratic function using conjucate gradient method</li>
+              <li>Find minimiser of a quadratic function using conjugate gradient method</li>
               <li>Analytically find the minimiser of a quadratic function</li>
+            </ul>
+          </li>
+        </ul>
+      </div>    
+    </div>
+
+
+
+
+
+    <!-- LECTURE SECTION -->
+    <div class="lecture">
+      <button class="collapsible">Lecture 11: Global Search Methods part 1</button>
+      <div class="content">
+        <h2 class="keywords">Keywords</h2>
+        <ul>
+          <li>Recap
+            <ul>
+              <li>What are Quasi-Newton methods? Replace Jakobian/Hessian in Newton's method with an approximation</li>
+              <li>Difference between orthogonal and linearly independent? Linearly independent vectors do not necessarily have u*v=0</li>
+              <li>Similarity between orthogonal and linearly independent? Both spans the same space</li>
+              <li>What is A-conjugate? Pairs of vectors are A-orthogonal u^T Av=0</li>
+              <li>What is definiteness? The bowl shape of a function</li>
+              <li>Difference between steepest descent and conjugate gradient methods?
+                Steepest descent always turns orthogonal.
+                Conjugate gradient always turns A-orthogonal.
+              </li>
+            </ul>
+          </li>
+          <li>Global vs Local Optimum
+            <ul>
+              <li>A global optimum is not necessarily unique</li>
+              <li>A saddle point is not a local optimum</li>
+            </ul>
+          </li>
+          <li>Global vs Local Optimisation Algorithms
+            <ul>
+              <li>Global methods have built-in mechanisms to escape local minima</li>
+              <li>Global methods do not gurantee to find the global optimum</li>
+              <li>Local methods find local optima only (a local optimum may be global)</li>
+              <li>Local methods have no way of escaping local minima</li>
+              <li>Local methods tend to be fast</li>
+            </ul>
+            <li>Deterministic vs Stochastic algorithm</li>
+            <li>Discrete vs Continous Optimisation
+              <ul>
+                <li>The input to the objective function determines whether the optimisation task is discrete or continuous.</li>
+                <li>Solving the travelling salesman problem can be seen as a discrete optimisation task</li>
+              </ul>
+            </li>
+            <li>Previous methods are all local methods
+              <ul>
+                <li>Gradient methods</li>
+                <li>Newton's method</li>
+                <li>Quasi-Newton methods</li>
+                <li>Conjugate gradient methods</li>
+                <li>These method start with an initial point and then generate a sequence of iterates.</li>
+                <li>Typically, the generated sequence converges to a local minimizer.</li>
+              </ul>
+            </li>
+            <li>Randomized search method or probabilistic search method</li>
+            <li>Naive Random Search Algorithm
+              <ul>
+                <li>Issue 1: small neighbourhood results in inability escape local minima</li>
+                <li>Issue 2: large neighbourhood results in slow search</li>
+              </ul>
+            </li>
+            <li>Simulated annealing
+              <ul>
+                <li>Pick a worse candidate with some probability</li>
+                <li>This probability should be high at the beginning but low towards the end</li>
+                <li>Keep track of the best point so far</li>
+              </ul>
+            </li>
+            <li>Particle Swarm Optimisation
+              <ul>
+                <li>Key difference: uses a set of candidate solutions called a swarm</li>
+                <li>Each candidate solution is called a particle</li>
+              </ul>
+            </li>
+            
+
+        </ul>
+
+        <h2 class="slides">Slides</h2>
+        <ul class="slides">
+          <li><a href="slides/11.0.pdf" target="_blank">Slides</a></li>
+        </ul>
+
+        <h2 class="lecture-notes">Lecture Notes</h2>
+        <ul class="lecture-notes">
+          <li><a href="./lec11.html" target="_blank">Lecture notes</a></li>
+        </ul>
+
+        <h2 class="homework">Homework</h2>
+        <ul class="homework">
+          <li>
+            <a href="./hw11.html" target="_blank">Homework 11</a>
+            <ul>
+              <li>Implement naive random search</li>
+              <li>Implement simulated annealing</li>
+              <li>Implement particle swarm optimisation</li>
             </ul>
           </li>
         </ul>
