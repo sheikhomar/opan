@@ -901,40 +901,96 @@
     </div>
 
     <div class="lecture">
-        <button class="collapsible">Lecture 19: Non-Parametric Techniques</button>
+      <button class="collapsible">Lecture 19: Non-Parametric Techniques</button>
+      <div class="content">
+        <h2 class="keywords">Keywords</h2>
+        <ul>
+          <li>Nearest Prototype Classification</li>
+          <li>Nearest Class Centroid (NCC)</li>
+          <li>Probability-based Classifier vs Nearest Centroid Classifier</li>
+          <li>Nearest Sub-Class Centroid (NSC), creates non-linear decision boundary</li>
+          <li>Nearest Neighbour, best classifier given large enough dataset</li>
+          <li>Fisher Discriminant Analysis
+            <ul>
+              <li>Assumes that samples in each class is unimodal and follows a normal distribution</li>
+              <li>Objective 1: Maximise the distance between mean values of each class in the projective subspace</li>
+              <li>Objective 2: Minimise the variance within each class in the projected subspace</li>
+              <li>Fisher's ratio optimises both objectives simultaneously</li>
+              <li>Solution obtained by eigenanalysis</li>
+            </ul>
+          </li>
+          <li>Linear Discriminant Analysis, problems with more than two classes</li>
+        </ul>
+  
+        <h2 class="slides">Slides</h2>
+        <ul class="slides">
+          <li><a href="slides/19.0.pdf" target="_blank">Slides</a></li>
+        </ul>
+
+        <h2 class="lecture-notes">Lecture Notes</h2>
+        <ul class="lecture-notes">
+          <li><a href="./lec19.html" target="_blank">Lecture notes</a></li>
+        </ul>
+
+        <h2 class="homework">No homework</h2>
+      </div>
+    </div>
+
+    <div class="lecture">
+        <button class="collapsible">Lecture 20: Linear Decision Functions</button>
         <div class="content">
           <h2 class="keywords">Keywords</h2>
           <ul>
-            <li>Nearest Prototype Classification</li>
-            <li>Nearest Class Centroid (NCC)</li>
-            <li>Probability-based Classifier vs Nearest Centroid Classifier</li>
-            <li>Nearest Sub-Class Centroid (NSC), creates non-linear decision boundary</li>
-            <li>Nearest Neighbour, best classifier given large enough dataset</li>
-            <li>Fisher Discriminant Analysis
+            <li>Bias term expresses the displacement of the hyperplane from the origin to one of the dimensions</li>
+            <li>The weight vector $\mathbf{w}$ is the normal to the discriminant hyperplane</li>
+            <li>Augmented vectors</li>
+            <li>Express two discriminant functions as one expression</li>
+            <li>Perceptron criterion function uses misclassified samples</li>
+            <li>Batch Perceptron algorithm</li>
+            <li>Single-sample Perceptron, update $\mathbf{w}$ based on a single randomly selected sample</li>
+            <li>Single-sample Perceptron with margin
               <ul>
-                <li>Assumes that samples in each class is unimodal and follows a normal distribution</li>
-                <li>Objective 1: Maximise the distance between mean values of each class in the projective subspace</li>
-                <li>Objective 2: Minimise the variance within each class in the projected subspace</li>
-                <li>Fisher's ratio optimises both objectives simultaneously</li>
-                <li>Solution obtained by eigenanalysis</li>
+                <li>Margin is a hyperparameter of the algorithm (grid search to find a good margin)</li>
               </ul>
             </li>
-            <li>Linear Discriminant Analysis, problems with more than two classes</li>
+            <li>Batch Relaxation with Margin</li>
+            <li>Single-sample Relaxation with Margin</li>
+            <li>How to select the learning rate?</li>
+            <li>Is sample-based update better than batch update? Depends, typically we use mini-batches.</li>
+            <li>Use of Linear Programming to solve the Perceptron objective function
+              <ul>
+                <li>Convert the problem to a linear programming</li>
+              </ul>
+            </li>
           </ul>
-    
+  
           <h2 class="slides">Slides</h2>
           <ul class="slides">
-            <li><a href="slides/19.0.pdf" target="_blank">Slides</a></li>
+            <li><a href="slides/20.0.pdf" target="_blank">Slides</a></li>
           </ul>
   
-          <h2 class="lecture-notes">Lecture Notes</h2>
-          <ul class="lecture-notes">
-            <li><a href="./lec19.html" target="_blank">Lecture notes</a></li>
-          </ul>
+          <h2 class="lecture-notes">No lecture Notes</h2>
   
-          <h2 class="homework">No homework</h2>
-        </div>
+          <h2 class="homework">Homework</h2>
+          <ul class="homework">
+            <li>
+              <a href="./hw20.html" target="_blank">Homework 20</a>
+              <ul>
+                <li>Prove that maximising the LDA criterion is equivalent to minimising another criterion.</li>
+                <li>Classify new samples using Nearest Centroid classifier</li>
+                <li>Classify new samples using Nearest Neighbour classifier</li>
+                <li>Calculate the data projections in the 1-dimensional feature space determined by applying Fisher Discriminant Analysis</li>
+                <li>Visualisation of projections using Fisher Discriminant Analysis</li>
+                <li>Train a Perceptron and classify new samples using the trained model</li>
+              </ul>
+            </li>
+          </ul>
+        </div>    
       </div>
+
+
+
+
   </div>
  
   <script src="main.js"></script>
