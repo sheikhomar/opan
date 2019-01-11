@@ -6,14 +6,37 @@
   <title>Main Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>  
+
+  <!-- Loading mathjax macro -->
+  <!-- Load mathjax -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+  <!-- MathJax configuration -->
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+          processEscapes: true,
+          processEnvironments: true
+      },
+      // Center justify equations in code and markdown cells. Elsewhere
+      // we use CSS to left justify single line equations in code cells.
+      displayAlign: 'center',
+      "HTML-CSS": {
+          styles: {'.MathJax_Display': {"margin": 0}},
+          linebreaks: { automatic: true }
+      }
+  });
+  </script>
+  <!-- End of mathjax configuration -->
 </head>
 <body>
   
   <div class="container">
     <button class="toggle-all">Toggle all</button>
-   
-    <!-- LECTURE SECTION -->
+
     <div class="lecture">
       <button class="collapsible">Lecture 1: Introduction to Optimization and Data Analytics </button>
       <div class="content">
@@ -32,7 +55,6 @@
       </div>
     </div>
 
-    <!-- LECTURE SECTION -->
     <div class="lecture">
       <button class="collapsible">Lecture 2:  Matrix games and Linear programming 1</button>
       <div class="content">
@@ -56,7 +78,6 @@
       </div>
     </div>
 
-    <!-- LECTURE SECTION -->
     <div class="lecture">
       <button class="collapsible">Lecture 3:  Simplex Method and Duality</button>
       <div class="content">
@@ -93,7 +114,6 @@
       </div>    
     </div>
 
-    <!-- LECTURE SECTION -->
     <div class="lecture">
       <button class="collapsible">Lecture 4: Basics of constrainted and unconstrained optimisation</button>
       <div class="content">
@@ -147,8 +167,6 @@
       </div>    
     </div>
 
-
-    <!-- LECTURE SECTION -->
     <div class="lecture">
       <button class="collapsible">Lecture 5: Problems with Equality Constraints</button>
       <div class="content">
@@ -184,9 +202,6 @@
       </div>    
     </div>
 
-
-
-    <!-- LECTURE SECTION -->
     <div class="lecture">
       <button class="collapsible">Lecture 6: Solving Linear Systems</button>
       <div class="content">
@@ -231,9 +246,6 @@
       </div>    
     </div>
 
-
-
-    <!-- LECTURE SECTION -->
     <div class="lecture">
       <button class="collapsible">Lecture 7: One-dimensional Search Methods</button>
       <div class="content">
@@ -280,9 +292,6 @@
       </div>    
     </div>
 
-
-
-    <!-- LECTURE SECTION -->
     <div class="lecture">
       <button class="collapsible">Lecture 8: Gradient Methods</button>
       <div class="content">
@@ -338,11 +347,6 @@
       </div>    
     </div>
 
-
-
-
-
-    <!-- LECTURE SECTION -->
     <div class="lecture">
       <button class="collapsible">Lecture 9: Newton's Method in Multivariate Optimisation Problems</button>
       <div class="content">
@@ -383,10 +387,6 @@
       </div>    
     </div>
 
-
-
-
-    <!-- LECTURE SECTION -->
     <div class="lecture">
       <button class="collapsible">Lecture 10: Newton's Method in Multivariate Optimisation Problems</button>
       <div class="content">
@@ -449,11 +449,6 @@
       </div>    
     </div>
 
-
-
-
-
-    <!-- LECTURE SECTION -->
     <div class="lecture">
       <button class="collapsible">Lecture 11: Global Search Methods part 1</button>
       <div class="content">
@@ -551,13 +546,6 @@
       </div>    
     </div>
 
-
-
-
-
-
-
-    <!-- LECTURE SECTION -->
     <div class="lecture">
       <button class="collapsible">Lecture 12: Genetic Algorithms</button>
       <div class="content">
@@ -599,8 +587,6 @@
       </div>    
     </div>
   
-  
-    <!-- LECTURE SECTION -->
     <div class="lecture">
       <button class="collapsible">Lecture 13: Visualisation</button>
       <div class="content">
@@ -656,7 +642,6 @@
       </div>    
     </div>
 
-    <!-- LECTURE SECTION -->
     <div class="lecture">
       <button class="collapsible">Lecture 14: Scientific Writing</button>
       <div class="content">
@@ -667,11 +652,6 @@
       </div>    
     </div>
     
-
-
-
-
-    <!-- LECTURE SECTION -->
     <div class="lecture">
 
       <button class="collapsible">Lecture 15:  Introduction to Data Analytics</button>
@@ -717,15 +697,6 @@
       </div>
     </div>
 
-
-
-
-
-
-
-
-
-    <!-- LECTURE SECTION -->
     <div class="lecture">
       <button class="collapsible">Lecture 16: Unsupervised Learning</button>
       <div class="content">
@@ -776,14 +747,6 @@
       </div>    
     </div>
 
-
-
-
-
-
-
-
-    <!-- LECTURE SECTION -->
     <div class="lecture">
       <button class="collapsible">Lecture 17: Bayesian Decision Theory </button>
       <div class="content">
@@ -817,8 +780,116 @@
       </div>
     </div>
 
+    <div class="lecture">
+      <button class="collapsible">Lecture 16: Unsupervised Learning</button>
+      <div class="content">
+        <h2 class="keywords">Keywords</h2>
+        <ul>
+          <li>Data pre-processing: Formatting, cleaning, cleaning, sampling, scaling</li>
+          <li>Data centering: translate the mean of each dimension to zero</li>
+          <li>Data standardisation, normalisation, rotation</li>
+          <li>Distance metrics: Manhattan and Euclidean </li>
+          <li>Similarity measures and distance-based similary functions</li>
+          <li>Principle Component Analysis
+            <ul>
+              <li>Automatically select number of components in PCA</li>
+            </ul>
+          </li>
+          <li>Clustering: finds groups of data</li>
+          <li>K-Means algorithm</li>
+          <li>Fuzzy k-Means</li>
+        </ul>
 
-  
+        <h2 class="slides">Slides</h2>
+        <ul class="slides">
+          <li><a href="slides/16.0.pdf" target="_blank">Slides</a></li>
+        </ul>
+
+        <h2 class="lecture-notes">Lecture Notes</h2>
+        <ul class="lecture-notes">
+          <li><a href="./lec16.html" target="_blank">Lecture notes</a></li>
+        </ul>
+
+        <h2 class="homework">Homework</h2>
+        <ul class="homework">
+          <li>
+            <a href="./hw16.html" target="_blank">Homework 16</a>
+            <ul>
+              <li>Prove that the projection matrix in PCA solves the regression problem</li>
+              <li>Apply three iterations of the batch k-Means algorithm</li>
+              <li>Plot data points before and after applying k-Means</li>
+              <li>Apply fuzzy k-Means algorithm</li>
+              <li>Perform data centering given 2D data points</li>
+              <li>Plot data points before and after centering</li>
+              <li>Perform data standardisation</li>
+              <li>Perform data normalisation using l2 norm</li>
+              <li>Project 2D data to a 1D space using PCA</li>
+            </ul>
+          </li>
+        </ul>
+      </div>    
+    </div>
+
+    <div class="lecture">
+      <button class="collapsible">Lecture 18: Maximum Likelihood</button>
+      <div class="content">
+        <h2 class="keywords">Keywords</h2>
+        <ul>
+          <li>Decision functions of the normal density</li>
+          <li>Multivariate normal distribution</li>
+          <li>Covariance matrix defines important properties of the distribution
+            <ul>
+              <li>If an off-diagonal entry $a_{ij}, i \neq j$ is 0 then $i$ and $j$ are statistically independent</li>
+              <li>Mahanolobis Distance takes into account the scaling of each dimension and their co-variances</li>
+              <li>Euclidean distance assumes each dimension have equal weight i.e., the dimensions are independent</li>
+            </ul>
+          </li>
+          <li>Data whitening
+            <ul>
+              <li>Transformation $\mathbf{X} \to \mathbf{Y}$ such that the covariance of $\mathbf{Y}$ is the identity</li>
+              <li>Why 1? Because there are no correlation between the dimensions i.e., each dimension is statistically independent</li>
+              <li>Why 2? Because computation is easier when covariance matrix is the identity</li>
+            </ul>
+          </li>
+          <li>Use of monotonic function to get rid of exponential function</li>
+          <li>Maximum Likelihood Estimation
+            <ul>
+              <li>Assume that $p(x|c_k) \sim$ follows a Normal Distribution with mean
+                  vector μk and covariance matrix Σk.</li>
+              <li>Assume that the distribution of each class is independent of those of the other classes.</li>
+              <li>We want to find the set of model parameters which gives the highest
+                possible likelihood given the data.</li>
+            </ul>
+          </li>
+          <li>Expectation-Maximization (EM): two step iterative algorithm
+            <ul>
+              <li>Expectation step calculates the expected labels</li>
+              <li>Maximisation step miximises the conditional probabilities </li>
+            </ul>
+          </li>
+          <li>Relation between k-Mean and Expectation-Maximization</li>
+        </ul>
+
+        <h2 class="slides">Slides</h2>
+        <ul class="slides">
+          <li><a href="slides/18.0.pdf" target="_blank">Slides</a></li>
+        </ul>
+
+        <h2 class="lecture-notes">No Lecture Notes</h2>
+
+        <h2 class="homework">Homework</h2>
+        <ul class="homework">
+          <li>
+            <a href="./hw18.html" target="_blank">Homework 18</a>
+            <ul>
+              <li>Classifiy new samples given two classes of training samples using Bayes' Decision Rule</li>
+              <li>Risk-based classification</li>
+              <li>Classification for samples that follow normal distribution (given covariance matrix)</li>
+            </ul>
+          </li>
+        </ul>
+      </div>    
+    </div>
 
   </div>
  
