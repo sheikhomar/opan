@@ -989,7 +989,7 @@
       </div>
 
 
-      <div class="lecture1">
+      <div class="lecture">
         <button class="collapsible">Lecture 21: Generalized Linear Discriminant Functions</button>
         <div class="content">
           <h2 class="keywords">Keywords</h2>
@@ -1036,6 +1036,68 @@
       </div>
 
 
+      <div class="lecture">
+        <button class="collapsible">Lecture 22: Kernel-based Learning</button>
+        <div class="content">
+          <h2 class="keywords">Keywords</h2>
+          <ul>
+            <li>Support Vector Machine
+              <ul>
+                <li>Infinite decision functions possible to separate samples of two classes</li>
+                <li>Discriminant hyperplane with large margin</li>
+                <li>Kernel function generates nonlinear decision function</li>
+                <li>Slack variables allows samples to violate the margin</li>
+                <li>Objective function solved by defining the Lagrangian</li>
+                <li>SVM objective function is turned into quadratic convex optimisation problem</li>
+                <li>Primal and Dual problem of SVM</li>
+                <li></li>
+              </ul>
+            </li>
+            <li>Kernel functions
+              <ul>
+                <li>Kernel function generates a positive semi-definite matrix called Kernel Matrix</li>
+                <li>Elements of the kernel matrix are defined on pairs of samples</li>
+                <li>Radial Basis Function (RBF) kernel function</li>
+                <li>Polynomial kernel function</li>
+              </ul>
+            </li>
+            <li>Kernel Least-Means Square Regression
+              <ul>
+                <li>Linear regression using kernel mapped data</li>
+                <li>Representer Theorem to substitute $W$ </li>
+              </ul>
+            </li>
+            <li>Kernel Discriminant Analysis</li>
+          </ul>
+    
+          <h2 class="slides">Slides</h2>
+          <ul class="slides">
+            <li><a href="slides/22.0.pdf" target="_blank">Slides</a></li>
+          </ul>
+  
+          <h2 class="lecture-notes">Lecture Notes</h2>
+          <ul class="lecture-notes">
+            <li><a href="./lec22.html" target="_blank">Lecture notes</a></li>
+          </ul>
+    
+          <h2 class="homework">Homework</h2>
+          <ul class="homework">
+            <li>
+              <a href="./hw22.html" target="_blank">Homework 22 (mostly not done)</a>
+              <ul>
+                <li>Prove that the decision regions for a multi-class classifier with $K$ linear discriminant function are convex</li>
+                <li>There always exists a nonlinear mapping to a higher dimension that makes samples linearly separable</li>
+                <li>Suppose that each training sample $\mathbf{x}_i$ in class 1 has a symmetric point in class 2 equal to $-\mathbf{x}_i$.
+                   Prove that the separating hyper of Least-Mean Square LMS solution passes through the origin</li>
+                <li>Plot decision functions for Support Vector Machine SVM classifier, draw optimal margin and support vectors</li>
+                <li>Show that the kernel matrix $\mathbf{K}$ in the dual problem formulation of SVM must be a positive definite in order to find a solution</li>
+                <li>Show that the linear SVM classifier always finds the optimal hyper-plane in the linear case.</li>
+                <li>How can kernel discriminant analysis be extended to exploit any type of pair-wise relationships</li>
+              </ul>
+            </li>
+          </ul>
+        </div>    
+      </div>
   </div>
  
   <script src="main.js"></script>
