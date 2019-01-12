@@ -5,12 +5,12 @@ body {
 
 .container {
   width: 800px;
-  float: left;
+  margin-left: 400px;
 }
 
 .sidebar {
-  float: left;
   width: 400px;
+  position: fixed;
 }
 
 .lecture {
