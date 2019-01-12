@@ -15,6 +15,7 @@ body {
 
 .lecture {
   margin: 4px;
+  display: none;
 }
 
 .collapsible {
@@ -35,7 +36,7 @@ body {
 
 .content {
   padding: 0 18px;
-  display: none;
+  -display: none;
   overflow: hidden;
   background-color: #f1f1f1;
 }

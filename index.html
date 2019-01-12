@@ -937,236 +937,346 @@
     </div>
 
     <div class="lecture">
-        <button class="collapsible">Lecture 20: Linear Decision Functions</button>
-        <div class="content">
-          <h2 class="keywords">Keywords</h2>
-          <ul>
-            <li>Bias term expresses the displacement of the hyperplane from the origin to one of the dimensions</li>
-            <li>The weight vector $\mathbf{w}$ is the normal to the discriminant hyperplane</li>
-            <li>Augmented vectors</li>
-            <li>Express two discriminant functions as one expression</li>
-            <li>Perceptron criterion function uses misclassified samples</li>
-            <li>Batch Perceptron algorithm</li>
-            <li>Single-sample Perceptron, update $\mathbf{w}$ based on a single randomly selected sample</li>
-            <li>Single-sample Perceptron with margin
-              <ul>
-                <li>Margin is a hyperparameter of the algorithm (grid search to find a good margin)</li>
-              </ul>
-            </li>
-            <li>Batch Relaxation with Margin</li>
-            <li>Single-sample Relaxation with Margin</li>
-            <li>How to select the learning rate?</li>
-            <li>Is sample-based update better than batch update? Depends, typically we use mini-batches.</li>
-            <li>Use of Linear Programming to solve the Perceptron objective function
-              <ul>
-                <li>Convert the problem to a linear programming</li>
-              </ul>
-            </li>
-          </ul>
-  
-          <h2 class="slides">Slides</h2>
-          <ul class="slides">
-            <li><a href="slides/20.0.pdf" target="_blank">Slides</a></li>
-          </ul>
-  
-          <h2 class="lecture-notes">No lecture Notes</h2>
-  
-          <h2 class="homework">Homework</h2>
-          <ul class="homework">
-            <li>
-              <a href="./hw20.html" target="_blank">Homework 20</a>
-              <ul>
-                <li>Prove that maximising the LDA criterion is equivalent to minimising another criterion.</li>
-                <li>Classify new samples using Nearest Centroid classifier</li>
-                <li>Classify new samples using Nearest Neighbour classifier</li>
-                <li>Calculate the data projections in the 1-dimensional feature space determined by applying Fisher Discriminant Analysis</li>
-                <li>Visualisation of projections using Fisher Discriminant Analysis</li>
-                <li>Train a Perceptron and classify new samples using the trained model</li>
-              </ul>
-            </li>
-          </ul>
-        </div>    
-      </div>
-
-
-      <div class="lecture">
-        <button class="collapsible">Lecture 21: Generalized Linear Discriminant Functions</button>
-        <div class="content">
-          <h2 class="keywords">Keywords</h2>
-          <ul>
-            <li>Perceptron objective function based on the least-squares problem</li>
-            <li>Why use l2 norm in the objective function?
-              <ul>
-                <li>We get a quadratic objective function with a single minimum</li>
-                <li>The use of squared makes it easier to compute the derivative</li>
-                <li>The use of the l2 norm in the objective function allows to express our objective in a single value</li>
-              </ul>
-            </li>
-            <li>A matrix is invertible (non-singular) if it has full rank</li>
-            <li>What full rank means in machine learning</li>
-            <li>When a matrix is not invertible then we can use the pseudo-inverse</li>
-            <li>Solving the least-squares problem analytically</li>
-            <li>Solving the least-squares problem iteratively</li>
-            <li>How to obtain non-linear decision functions
-              <ul>
-                <li>Change the form of the decision function by adding terms involving products. Not used in practice!</li>
-                <li>Change the data representation by defining a nonlinear mapping $\phi(\cdot)$</li>
-              </ul>
-            </li>
-            <li>Binary classifiers in multi-class classification problems
-              <ul>
-                <li>One-versus-Rest: Train $K$ binary classifiers</li>
-                <li>One-versus-One: classify based on majority voting</li>
-              </ul>
-            </li>
-          </ul>
-  
-          <h2 class="slides">Slides</h2>
-          <ul class="slides">
-            <li><a href="slides/21.0.pdf" target="_blank">Slides</a></li>
-          </ul>
-  
-          <h2 class="lecture-notes">Lecture Notes</h2>
-          <ul class="lecture-notes">
-            <li><a href="./lec21.html" target="_blank">Lecture notes</a></li>
-          </ul>
-  
-          <h2 class="homework">No homework</h2>
-        </div>
-      </div>
-
-      <div class="lecture">
-        <button class="collapsible">Lecture 22: Kernel-based Learning</button>
-        <div class="content">
-          <h2 class="keywords">Keywords</h2>
-          <ul>
-            <li>Support Vector Machine
-              <ul>
-                <li>Infinite decision functions possible to separate samples of two classes</li>
-                <li>Discriminant hyperplane with large margin</li>
-                <li>Kernel function generates nonlinear decision function</li>
-                <li>Slack variables allows samples to violate the margin</li>
-                <li>Objective function solved by defining the Lagrangian</li>
-                <li>SVM objective function is turned into quadratic convex optimisation problem</li>
-                <li>Primal and Dual problem of SVM</li>
-                <li></li>
-              </ul>
-            </li>
-            <li>Kernel functions
-              <ul>
-                <li>Kernel function generates a positive semi-definite matrix called Kernel Matrix</li>
-                <li>Elements of the kernel matrix are defined on pairs of samples</li>
-                <li>Radial Basis Function (RBF) kernel function</li>
-                <li>Polynomial kernel function</li>
-              </ul>
-            </li>
-            <li>Kernel Least-Means Square Regression
-              <ul>
-                <li>Linear regression using kernel mapped data</li>
-                <li>Representer Theorem to substitute $W$ </li>
-              </ul>
-            </li>
-            <li>Kernel Discriminant Analysis</li>
-          </ul>
-    
-          <h2 class="slides">Slides</h2>
-          <ul class="slides">
-            <li><a href="slides/22.0.pdf" target="_blank">Slides</a></li>
-          </ul>
-  
-          <h2 class="lecture-notes">Lecture Notes</h2>
-          <ul class="lecture-notes">
-            <li><a href="./lec22.html" target="_blank">Lecture notes</a></li>
-          </ul>
-    
-          <h2 class="homework">Homework</h2>
-          <ul class="homework">
-            <li>
-              <a href="./hw22.html" target="_blank">Homework 22 (mostly not done)</a>
-              <ul>
-                <li>Prove that the decision regions for a multi-class classifier with $K$ linear discriminant function are convex</li>
-                <li>There always exists a nonlinear mapping to a higher dimension that makes samples linearly separable</li>
-                <li>Suppose that each training sample $\mathbf{x}_i$ in class 1 has a symmetric point in class 2 equal to $-\mathbf{x}_i$.
-                   Prove that the separating hyper of Least-Mean Square LMS solution passes through the origin</li>
-                <li>Plot decision functions for Support Vector Machine SVM classifier, draw optimal margin and support vectors</li>
-                <li>Show that the kernel matrix $\mathbf{K}$ in the dual problem formulation of SVM must be a positive definite in order to find a solution</li>
-                <li>Show that the linear SVM classifier always finds the optimal hyper-plane in the linear case.</li>
-                <li>How can kernel discriminant analysis be extended to exploit any type of pair-wise relationships</li>
-              </ul>
-            </li>
-          </ul>
-        </div>    
-      </div>
-
-      <div class="lecture">
-          <button class="collapsible">Lecture 23: Overfitting, hyperparameter selection and regularisation</button>
-          <div class="content">
-            <h2 class="keywords">Keywords</h2>
+      <button class="collapsible">Lecture 20: Linear Decision Functions</button>
+      <div class="content">
+        <h2 class="keywords">Keywords</h2>
+        <ul>
+          <li>Bias term expresses the displacement of the hyperplane from the origin to one of the dimensions</li>
+          <li>The weight vector $\mathbf{w}$ is the normal to the discriminant hyperplane</li>
+          <li>Augmented vectors</li>
+          <li>Express two discriminant functions as one expression</li>
+          <li>Perceptron criterion function uses misclassified samples</li>
+          <li>Batch Perceptron algorithm</li>
+          <li>Single-sample Perceptron, update $\mathbf{w}$ based on a single randomly selected sample</li>
+          <li>Single-sample Perceptron with margin
             <ul>
-              <li>Training phase and test phase</li>
-              <li>Empirical loss: error on the training set</li>
-              <li>Expected loss: error on the test set</li>
-              <li>Generalisation ability is measured using previously unseen samples</li>
-              <li>Assumes that the unseen samples are drawn from the same distribution as the training data i.e., samples from both sets exhibit similar properties</li>
-              <li>Underfitting: the model parameters are two few to represent the underlying process that generated the samples
-                <ul>
-                  <li>The model can capture "trends" in the data</li>
-                  <li>The model cannot capture details</li>
-                </ul>
-              </li>
-              <li>Good fit means that model is
-                <ul>
-                  <li>simple enough to capture trends in the data, and</li>
-                  <li>complex enough to capture details</li>
-                </ul>
-              </li>
-              <li>Overfitting: the model parameters are too many
-                <ul>
-                  <li>The model captures details (however small) and deviates from the global trends</li>
-                  <li>The model just memorises the data but does not learn the underlying process that generate the samples</li>
-                </ul>
-              </li>
-              <li>The <strong>capacity</strong> of a model is the maximum number of
-                  samples it can memorize (irrespectively of their arrangement).
-                  We call this number Vapnik-Chevronenkis (VC) dimension</li>
-              <li>Factors affecting the training process
-                <ul>
-                  <li>Hyper-parameter value selection: Stratified k-fold cross-validation</li>
-                  <li>Stopping criteria in iterative optimization: early stopping on hold-out validation set</li>
-                  <li>Regularisation</li>
-                  <li>Training set size,</li>
-                </ul>
-              </li>
-              <li>Regularization</li>
-                <ul>
-                  <li>a process to enforce properties in the solution of an optimization problem (e.g. low capacity, smoothness)</li>
-                  <li>L2 Tikhonov regularisation forces the values of w to be small (leads to smoother decision functions</li>
-                  <li>L1 regularisation forces w to be sparse, i.e. to have most values equal to zero (leads to simpler and more interpretable solutions)</li>
-                  <li>used in models for both iterative optimisation and convex optimisation</li>
-                  <li>Smoothness and semi-supervised learning</li>
-                  <li>Dropout in NN in iterative optimisation</li>
-                  <li>Continuous dropout-based training</li>
-                  <li>Dropout in convex optimization</li>
-                </ul>
-              <li>Training set size
-                <ul>
-                  <li>When the number of training samples is small (smaller than the number of the model’s parameters), the model tends to overfit</li>
-                  <li>In neural networks, use data augmentation and transfer learning</li>
-                  <li>In statistical ML, this problem is addressed using regularization</li>
-                </ul>
-              </li>
+              <li>Margin is a hyperparameter of the algorithm (grid search to find a good margin)</li>
             </ul>
-      
-            <h2 class="slides">Slides</h2>
-            <ul class="slides">
-              <li><a href="slides/23.0.pdf" target="_blank">Slides</a></li>
+          </li>
+          <li>Batch Relaxation with Margin</li>
+          <li>Single-sample Relaxation with Margin</li>
+          <li>How to select the learning rate?</li>
+          <li>Is sample-based update better than batch update? Depends, typically we use mini-batches.</li>
+          <li>Use of Linear Programming to solve the Perceptron objective function
+            <ul>
+              <li>Convert the problem to a linear programming</li>
             </ul>
-    
-            <h2 class="lecture-notes">Lecture Notes</h2>
-      
-            <h2 class="homework">No homework</h2>
-          </div>    
-        </div>
+          </li>
+        </ul>
+
+        <h2 class="slides">Slides</h2>
+        <ul class="slides">
+          <li><a href="slides/20.0.pdf" target="_blank">Slides</a></li>
+        </ul>
+
+        <h2 class="lecture-notes">No lecture Notes</h2>
+
+        <h2 class="homework">Homework</h2>
+        <ul class="homework">
+          <li>
+            <a href="./hw20.html" target="_blank">Homework 20</a>
+            <ul>
+              <li>Prove that maximising the LDA criterion is equivalent to minimising another criterion.</li>
+              <li>Classify new samples using Nearest Centroid classifier</li>
+              <li>Classify new samples using Nearest Neighbour classifier</li>
+              <li>Calculate the data projections in the 1-dimensional feature space determined by applying Fisher Discriminant Analysis</li>
+              <li>Visualisation of projections using Fisher Discriminant Analysis</li>
+              <li>Train a Perceptron and classify new samples using the trained model</li>
+            </ul>
+          </li>
+        </ul>
+      </div>    
+    </div>
+
+
+    <div class="lecture">
+      <button class="collapsible">Lecture 21: Generalized Linear Discriminant Functions</button>
+      <div class="content">
+        <h2 class="keywords">Keywords</h2>
+        <ul>
+          <li>Perceptron objective function based on the least-squares problem</li>
+          <li>Why use l2 norm in the objective function?
+            <ul>
+              <li>We get a quadratic objective function with a single minimum</li>
+              <li>The use of squared makes it easier to compute the derivative</li>
+              <li>The use of the l2 norm in the objective function allows to express our objective in a single value</li>
+            </ul>
+          </li>
+          <li>A matrix is invertible (non-singular) if it has full rank</li>
+          <li>What full rank means in machine learning</li>
+          <li>When a matrix is not invertible then we can use the pseudo-inverse</li>
+          <li>Solving the least-squares problem analytically</li>
+          <li>Solving the least-squares problem iteratively</li>
+          <li>How to obtain non-linear decision functions
+            <ul>
+              <li>Change the form of the decision function by adding terms involving products. Not used in practice!</li>
+              <li>Change the data representation by defining a nonlinear mapping $\phi(\cdot)$</li>
+            </ul>
+          </li>
+          <li>Binary classifiers in multi-class classification problems
+            <ul>
+              <li>One-versus-Rest: Train $K$ binary classifiers</li>
+              <li>One-versus-One: classify based on majority voting</li>
+            </ul>
+          </li>
+        </ul>
+
+        <h2 class="slides">Slides</h2>
+        <ul class="slides">
+          <li><a href="slides/21.0.pdf" target="_blank">Slides</a></li>
+        </ul>
+
+        <h2 class="lecture-notes">Lecture Notes</h2>
+        <ul class="lecture-notes">
+          <li><a href="./lec21.html" target="_blank">Lecture notes</a></li>
+        </ul>
+
+        <h2 class="homework">No homework</h2>
+      </div>
+    </div>
+
+    <div class="lecture">
+      <button class="collapsible">Lecture 22: Kernel-based Learning</button>
+      <div class="content">
+        <h2 class="keywords">Keywords</h2>
+        <ul>
+          <li>Support Vector Machine
+            <ul>
+              <li>Infinite decision functions possible to separate samples of two classes</li>
+              <li>Discriminant hyperplane with large margin</li>
+              <li>Kernel function generates nonlinear decision function</li>
+              <li>Slack variables allows samples to violate the margin</li>
+              <li>Objective function solved by defining the Lagrangian</li>
+              <li>SVM objective function is turned into quadratic convex optimisation problem</li>
+              <li>Primal and Dual problem of SVM</li>
+              <li></li>
+            </ul>
+          </li>
+          <li>Kernel functions
+            <ul>
+              <li>Kernel function generates a positive semi-definite matrix called Kernel Matrix</li>
+              <li>Elements of the kernel matrix are defined on pairs of samples</li>
+              <li>Radial Basis Function (RBF) kernel function</li>
+              <li>Polynomial kernel function</li>
+            </ul>
+          </li>
+          <li>Kernel Least-Means Square Regression
+            <ul>
+              <li>Linear regression using kernel mapped data</li>
+              <li>Representer Theorem to substitute $W$ </li>
+            </ul>
+          </li>
+          <li>Kernel Discriminant Analysis</li>
+        </ul>
+  
+        <h2 class="slides">Slides</h2>
+        <ul class="slides">
+          <li><a href="slides/22.0.pdf" target="_blank">Slides</a></li>
+        </ul>
+
+        <h2 class="lecture-notes">Lecture Notes</h2>
+        <ul class="lecture-notes">
+          <li><a href="./lec22.html" target="_blank">Lecture notes</a></li>
+        </ul>
+  
+        <h2 class="homework">Homework</h2>
+        <ul class="homework">
+          <li>
+            <a href="./hw22.html" target="_blank">Homework 22 (mostly not done)</a>
+            <ul>
+              <li>Prove that the decision regions for a multi-class classifier with $K$ linear discriminant function are convex</li>
+              <li>There always exists a nonlinear mapping to a higher dimension that makes samples linearly separable</li>
+              <li>Suppose that each training sample $\mathbf{x}_i$ in class 1 has a symmetric point in class 2 equal to $-\mathbf{x}_i$.
+                  Prove that the separating hyper of Least-Mean Square LMS solution passes through the origin</li>
+              <li>Plot decision functions for Support Vector Machine SVM classifier, draw optimal margin and support vectors</li>
+              <li>Show that the kernel matrix $\mathbf{K}$ in the dual problem formulation of SVM must be a positive definite in order to find a solution</li>
+              <li>Show that the linear SVM classifier always finds the optimal hyper-plane in the linear case.</li>
+              <li>How can kernel discriminant analysis be extended to exploit any type of pair-wise relationships</li>
+            </ul>
+          </li>
+        </ul>
+      </div>    
+    </div>
+
+    <div class="lecture">
+      <button class="collapsible">Lecture 23: Overfitting, hyperparameter selection and regularisation</button>
+      <div class="content">
+        <h2 class="keywords">Keywords</h2>
+        <ul>
+          <li>Training phase and test phase</li>
+          <li>Empirical loss: error on the training set</li>
+          <li>Expected loss: error on the test set</li>
+          <li>Generalisation ability is measured using previously unseen samples</li>
+          <li>Assumes that the unseen samples are drawn from the same distribution as the training data i.e., samples from both sets exhibit similar properties</li>
+          <li>Underfitting: the model parameters are two few to represent the underlying process that generated the samples
+            <ul>
+              <li>The model can capture "trends" in the data</li>
+              <li>The model cannot capture details</li>
+            </ul>
+          </li>
+          <li>Good fit means that model is
+            <ul>
+              <li>simple enough to capture trends in the data, and</li>
+              <li>complex enough to capture details</li>
+            </ul>
+          </li>
+          <li>Overfitting: the model parameters are too many
+            <ul>
+              <li>The model captures details (however small) and deviates from the global trends</li>
+              <li>The model just memorises the data but does not learn the underlying process that generate the samples</li>
+            </ul>
+          </li>
+          <li>The <strong>capacity</strong> of a model is the maximum number of
+              samples it can memorize (irrespectively of their arrangement).
+              We call this number Vapnik-Chevronenkis (VC) dimension</li>
+          <li>Factors affecting the training process
+            <ul>
+              <li>Hyper-parameter value selection: Stratified k-fold cross-validation</li>
+              <li>Stopping criteria in iterative optimization: early stopping on hold-out validation set</li>
+              <li>Regularisation</li>
+              <li>Training set size,</li>
+            </ul>
+          </li>
+          <li>Regularization</li>
+            <ul>
+              <li>a process to enforce properties in the solution of an optimization problem (e.g. low capacity, smoothness)</li>
+              <li>L2 Tikhonov regularisation forces the values of w to be small (leads to smoother decision functions</li>
+              <li>L1 regularisation forces w to be sparse, i.e. to have most values equal to zero (leads to simpler and more interpretable solutions)</li>
+              <li>used in models for both iterative optimisation and convex optimisation</li>
+              <li>Smoothness and semi-supervised learning</li>
+              <li>Dropout in NN in iterative optimisation</li>
+              <li>Continuous dropout-based training</li>
+              <li>Dropout in convex optimization</li>
+            </ul>
+          <li>Training set size
+            <ul>
+              <li>When the number of training samples is small (smaller than the number of the model’s parameters), the model tends to overfit</li>
+              <li>In neural networks, use data augmentation and transfer learning</li>
+              <li>In statistical ML, this problem is addressed using regularization</li>
+            </ul>
+          </li>
+        </ul>
+  
+        <h2 class="slides">Slides</h2>
+        <ul class="slides">
+          <li><a href="slides/23.0.pdf" target="_blank">Slides</a></li>
+        </ul>
+
+        <h2 class="lecture-notes">Lecture Notes</h2>
+  
+        <h2 class="homework">No homework</h2>
+      </div>    
+    </div>
+
+    <div class="lecture">
+      <button class="collapsible">Lecture 24: Multilayer Neural Networks, Part 1</button>
+      <div class="content">
+        <h2 class="keywords">Keywords</h2>
+        <ul>
+          <li>Lots of research about the Multi-Layer Perceptron (MLP)</li>
+          <li>Parameters of a neural network
+            <ul>
+              <li>The number of layers</li>
+              <li>The weight matrix</li>
+              <li>The activation functions</li>
+            </ul>
+          </li>
+          <li>Three-Layer Neural Networks
+            <ul>
+              <li>Called Single-hidden Layer Feedforward Neural Network</li>
+              <li>This topology is interesting because we can prove that if the number of neurons is the same as the number of samples,
+                  then we can approximate everything. This is a proof that shows that all neural networks are universal approximators.</li>
+            </ul>
+          </li>
+          <li>Activation functions
+            <ul>
+              <li>Any differentiable function can be used as an activation function</li>
+              <li>Identity function</li>
+              <li>Logistis</li>
+              <li>HyperbTan</li>
+              <li>ArcTan</li>
+              <li>ReLU</li>
+              <li>Leaky ReLU leaks some of the information for negative values</li>
+              <li>Softmax is commonly used for the neurons of the last layer of the network</li>
+            </ul>
+          </li>
+          <li>The Backpropagation Algorithm
+            <ul>
+              <li>Training error can be measured using the Mean-Square Error criterion</li>
+              <li>Target values cannot be negative for ReLU and Softmax activation functions</li>
+              <li>Backpropagation update rule is based on gradient descent</li>
+              <li>Stochastic Backpropagation</li>
+              <li>Batch Backpropagation</li>
+            </ul>
+          </li>
+        </ul>
+  
+        <h2 class="slides">Slides</h2>
+        <ul class="slides">
+          <li><a href="slides/24.0.pdf" target="_blank">Slides</a></li>
+        </ul>
+
+        <h2 class="lecture-notes">No lecture Notes</h2>
+  
+        <h2 class="homework">Homework</h2>
+        <ul class="homework">
+          <li>
+            <a href="./hw24.html" target="_blank">Homework 24</a>
+            <ul>
+              
+            </ul>
+          </li>
+        </ul>
+      </div>    
+    </div>
+
+    <div class="lecture">
+      <button class="collapsible">Lecture 25: Multilayer Neural Networks, Part 2</button>
+      <div class="content">
+        <h2 class="keywords">Keywords</h2>
+        <ul>
+          <li>Improving Backpropagation, learning with momentum</li>
+          <li>Radial Basis Function RBF network
+            <ul>
+              <li>Radial means that a neuron will react the same way based on how nears a sample is to the target value</li>
+              <li>Why? approximate a function that has multiple modes or peaks</li>
+            </ul>
+          </li>
+          <li>Auto-Encoder Network
+            <ul>
+              <li>Bottlenect layer forces the network to find a compressed representations</li>
+              <li>Why? To remove noise from the training set and select important features</li>
+            </ul>
+          </li>
+          <li>Self-Organising Map
+            <ul>
+              <li>Consists of a rectangular grid of $K$ neurons, e.g. $8 \times 8 = 64$ neurons</li>
+              <li>The location of each neuron is represented by a weight vector $\mathbf{w}$</li>
+              <li>3 step training process; competetion, cooperation and adaptation</li>
+              
+              <li>Competition: For each sample $\mathbf{x}_i$, find the closest neuron $j^{*}$. Move it closer to that data point</li>
+              <li>Cooperation: Determine neighbours of $j^{*}$</li>
+              <li>Adaptation: Move the neighbours of $j^{*}$ closer to $j^{*}$, with farther away neighbors moving less</li>
+            </ul>
+          </li>
+          <li>Convolutional Neural Networks
+            <ul>
+              <li>Take the raw image data as input instead of a vector representation of the image</li>
+              <li>Convolutional layer: each neuron applies a filter onto the image and produces a <strong>feature map</strong></li>
+              <li>Sub-sampling/pooling layer: resizes the feature maps, average, max and random pooling</li>
+              <li>Fully-connected layer: standard vector-based neural network layer</li>
+            </ul>
+          </li>
+        </ul>
+  
+        <h2 class="slides">Slides (from 56)</h2>
+        <ul class="slides">
+          <li><a href="slides/24.0.pdf" target="_blank">Slides</a></li>
+          <li><a href="extra/algobeans-self-organizing-maps-tutorial.pdf">Algobeans: Self-Organizing Maps Tutorial</a></li>
+        </ul>
+      </div>
+    </div>
+  
   </div>
  
   <script src="main.js"></script>
