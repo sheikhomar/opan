@@ -1035,7 +1035,6 @@
         </div>
       </div>
 
-
       <div class="lecture">
         <button class="collapsible">Lecture 22: Kernel-based Learning</button>
         <div class="content">
@@ -1098,6 +1097,76 @@
           </ul>
         </div>    
       </div>
+
+      <div class="lecture">
+          <button class="collapsible">Lecture 23: Overfitting, hyperparameter selection and regularisation</button>
+          <div class="content">
+            <h2 class="keywords">Keywords</h2>
+            <ul>
+              <li>Training phase and test phase</li>
+              <li>Empirical loss: error on the training set</li>
+              <li>Expected loss: error on the test set</li>
+              <li>Generalisation ability is measured using previously unseen samples</li>
+              <li>Assumes that the unseen samples are drawn from the same distribution as the training data i.e., samples from both sets exhibit similar properties</li>
+              <li>Underfitting: the model parameters are two few to represent the underlying process that generated the samples
+                <ul>
+                  <li>The model can capture "trends" in the data</li>
+                  <li>The model cannot capture details</li>
+                </ul>
+              </li>
+              <li>Good fit means that model is
+                <ul>
+                  <li>simple enough to capture trends in the data, and</li>
+                  <li>complex enough to capture details</li>
+                </ul>
+              </li>
+              <li>Overfitting: the model parameters are too many
+                <ul>
+                  <li>The model captures details (however small) and deviates from the global trends</li>
+                  <li>The model just memorises the data but does not learn the underlying process that generate the samples</li>
+                </ul>
+              </li>
+              <li>The <strong>capacity</strong> of a model is the maximum number of
+                  samples it can memorize (irrespectively of their arrangement).
+                  We call this number Vapnik-Chevronenkis (VC) dimension</li>
+              <li>Factors affecting the training process
+                <ul>
+                  <li>Hyper-parameter value selection: Stratified k-fold cross-validation</li>
+                  <li>Stopping criteria in iterative optimization: early stopping on hold-out validation set</li>
+                  <li>Regularisation</li>
+                  <li>Training set size,</li>
+                </ul>
+              </li>
+              <li>Regularization</li>
+                <ul>
+                  <li>a process to enforce properties in the solution of an optimization problem (e.g. low capacity, smoothness)</li>
+                  <li>L2 Tikhonov regularisation forces the values of w to be small (leads to smoother decision functions</li>
+                  <li>L1 regularisation forces w to be sparse, i.e. to have most values equal to zero (leads to simpler and more interpretable solutions)</li>
+                  <li>used in models for both iterative optimisation and convex optimisation</li>
+                  <li>Smoothness and semi-supervised learning</li>
+                  <li>Dropout in NN in iterative optimisation</li>
+                  <li>Continuous dropout-based training</li>
+                  <li>Dropout in convex optimization</li>
+                </ul>
+              <li>Training set size
+                <ul>
+                  <li>When the number of training samples is small (smaller than the number of the model’s parameters), the model tends to overfit</li>
+                  <li>In neural networks, use data augmentation and transfer learning</li>
+                  <li>In statistical ML, this problem is addressed using regularization</li>
+                </ul>
+              </li>
+            </ul>
+      
+            <h2 class="slides">Slides</h2>
+            <ul class="slides">
+              <li><a href="slides/23.0.pdf" target="_blank">Slides</a></li>
+            </ul>
+    
+            <h2 class="lecture-notes">Lecture Notes</h2>
+      
+            <h2 class="homework">No homework</h2>
+          </div>    
+        </div>
   </div>
  
   <script src="main.js"></script>
